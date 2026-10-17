@@ -12,15 +12,15 @@
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>勞報單系統線上試玩（免登入）｜勞報單簽核系統</title>
-<meta name="description" content="免登入、免安裝的勞務報酬單系統線上試玩：左邊企業後台開單，右邊用手機畫面簽署，二代健保與扣繳自動試算。資料皆為虛構，重新整理即恢復。">
+<title>Nomad Workbench 線上試玩（免登入）｜客戶、案件、帳務與勞報單</title>
+<meta name="description" content="免登入、免安裝的 Nomad Workbench 線上試玩：從客戶與案件管理、互動紀錄、應收應付與案件利潤，到勞務報酬單手機簽署，完整流程跑一遍。資料皆為虛構，重新整理即恢復原狀。">
 <link rel="canonical" href="https://workbench.remonnomad.com/demo/">
-<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="勞報單簽核系統｜REMON nomad">
+<meta property="og:site_name" content="Nomad Workbench｜REMON nomad">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:title" content="勞報單系統線上試玩（免登入）">
-<meta property="og:description" content="左邊開單、右邊用手機簽名，完整流程跑一遍。資料都是假的，放心亂按。">
+<meta property="og:title" content="Nomad Workbench 線上試玩（免登入）">
+<meta property="og:description" content="客戶、案件、帳務到勞報單簽署，完整流程跑一遍。資料都是假的，放心亂按。">
 <meta property="og:url" content="https://workbench.remonnomad.com/demo/">
 <meta property="og:image" content="https://workbench.remonnomad.com/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -38,6 +38,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 "Noto Sans TC"
 .seg button{border:0;background:none;border-radius:999px;padding:5px 12px;font:inherit;color:var(--mute);cursor:pointer;min-height:32px}
 .seg button[aria-pressed=true]{background:var(--c);color:#fff}
 .lbl{font-size:12px;color:var(--mute)}
+.route{flex-basis:100%;order:8;display:flex;gap:6px 8px;flex-wrap:wrap;align-items:center}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 12px;font:inherit;font-size:13px;color:var(--ink);cursor:pointer;min-height:30px}
+.chip:hover{border-color:var(--c);color:#0A4F42;background:var(--tint)}
 .btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 12px;font:inherit;cursor:pointer;color:var(--ink);min-height:34px;text-decoration:none;display:inline-flex;align-items:center}
 .btn:hover{border-color:var(--c)}
 .btn.pri{background:var(--c);border-color:var(--c);color:#fff}
@@ -71,16 +74,26 @@ select{font:inherit;border:1px solid var(--line);border-radius:8px;padding:4px 8
 </head>
 <body>
 <div class="top">
-  <a class="brand" href="/"><span class="mk">勞</span><span><b>勞報單系統 線上試玩</b><span>v1.6.1・在瀏覽器中執行的完整示範</span></span></a>
+  <a class="brand" href="/"><span class="mk">N</span><span><b>Nomad Workbench 線上試玩</b><span>v2.7.0・在瀏覽器中執行的完整示範</span></span></a>
   <span class="lbl">後台身分</span>
   <div class="seg" role="group" aria-label="後台身分">
-    <button type="button" data-u="clerk@demo.tw" aria-pressed="false">經辦</button>
-    <button type="button" data-u="fin@demo.tw" aria-pressed="false">財務</button>
     <button type="button" data-u="owner@demo.tw" aria-pressed="true">管理員</button>
+    <button type="button" data-u="fin@demo.tw" aria-pressed="false">財務</button>
+    <button type="button" data-u="sales@demo.tw" aria-pressed="false">業務</button>
+    <button type="button" data-u="clerk@demo.tw" aria-pressed="false">經辦</button>
   </div>
   <button type="button" class="btn" id="reset">重設示範</button>
-  <a class="btn pri" href="/#contact">洽詢試用</a>
-  <div class="note">示範資料皆為虛構，只存在這個分頁；重新整理即恢復原狀。示範版不寄信、不產生 PDF、不連線任何伺服器。</div>
+  <a class="btn pri" href="/install#signup">免費試用 180 天</a>
+  <div class="note">示範資料皆為虛構，只存在這個分頁；重新整理即恢復原狀。示範版不真的寄信、不產生 PDF、不連線任何伺服器。換「身分」可以看到不同角色的權限：業務看不到金額與帳務。</div>
+  <div class="route" role="group" aria-label="試玩路線">
+    <span class="lbl">試玩路線</span>
+    <button type="button" class="chip" data-go="case">① 案件與利潤</button>
+    <button type="button" class="chip" data-go="parties">② 客戶與往來</button>
+    <button type="button" class="chip" data-go="notes">③ 互動紀錄與寄信</button>
+    <button type="button" class="chip" data-go="ar">④ 應收應付</button>
+    <button type="button" class="chip" data-go="media">⑤ 媒體・KOL 邀約</button>
+    <button type="button" class="chip" data-go="new">⑥ 開勞報單</button>
+  </div>
 </div>
 <div class="tabs" role="tablist">
   <button type="button" role="tab" data-p="adm" aria-selected="true">企業後台</button>
@@ -97,10 +110,10 @@ select{font:inherit;border:1px solid var(--line);border-radius:8px;padding:4px 8
   </section>
 </main>
 <div class="toast" id="toast" role="status"></div>
-<script src="runtime.js?v=muwsttms"></script>
+<script src="runtime.js?v=mvcjuz35"></script>
 <script>
 (function () {
-  var NAMES = { 'clerk@demo.tw': '林經辦（經辦）', 'fin@demo.tw': '陳會計（財務）', 'owner@demo.tw': '王老闆（管理員）' };
+  var NAMES = { 'clerk@demo.tw': '林經辦（經辦）', 'fin@demo.tw': '陳會計（財務）', 'sales@demo.tw': '張業務（業務）', 'owner@demo.tw': '王老闆（管理員）' };
   var fa = document.getElementById('fa'), fp = document.getElementById('fp'), pick = document.getElementById('pick');
   var user = 'owner@demo.tw', known = {}, tmr;
   function toast(m) { var t = document.getElementById('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(tmr); tmr = setTimeout(function () { t.classList.remove('on'); }, 3200); }
@@ -136,6 +149,23 @@ select{font:inherit;border:1px solid var(--line);border-radius:8px;padding:4px 8
     };
   });
   document.querySelectorAll('.tabs button').forEach(function (b) { b.onclick = function () { tab(b.getAttribute('data-p')); }; });
+  var NEEDS = { ar: 'acct.read', ap: 'acct.read' };
+  var GO_WHO = { ar: '財務或管理員', ap: '財務或管理員' };
+  function goView(view) {
+    tab('adm');
+    var W = fa.contentWindow && fa.contentWindow.WB;
+    if (!W || !W.S || !W.S.boot) { toast('後台還在載入，請稍後再按一次'); return; }
+    if (NEEDS[view] && !W.has(NEEDS[view])) { toast('這個身分看不到帳務，請在上方切換成「' + GO_WHO[view] + '」'); return; }
+    if ((view === 'case') ) {
+      var list = JSON.parse(window.__demoRpc('adm_crm_cases', '[]', user));
+      var c = list && list.ok && list.data.filter(function (x) { return /年菜包裝設計/.test(x.name); })[0];
+      if (!c) { W.go('cases'); return; }
+      W.go('case', { sel: c.id }); return;
+    }
+    if (view === 'new' && !W.has('slip.create')) { toast('這個身分不能開勞報單，請切換成「經辦」或「財務」'); return; }
+    W.go(view, {});
+  }
+  document.querySelectorAll('.chip').forEach(function (b) { b.onclick = function () { goView(b.getAttribute('data-go')); }; });
   document.getElementById('reset').onclick = function () { location.href = location.pathname; };
   pick.onchange = function () { loadPayee(pick.value); };
   refreshPick(true);
