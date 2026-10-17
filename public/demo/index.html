@@ -70,6 +70,9 @@ select{font:inherit;border:1px solid var(--line);border-radius:8px;padding:4px 8
   .phone{border:0;border-radius:0;max-height:none;box-shadow:none;border-top:1px solid var(--line)}
   .ph{width:100%}
 }
+.hint{flex-basis:100%;order:9;font-size:12.5px;color:#7a5200;background:#fff6dd;border:1px solid #f0d58a;border-radius:8px;padding:6px 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.hint.warn{display:none;font-size:14px;font-weight:600;background:#ffe9e6;border-color:#f2b3ab;color:#8a2316;padding:10px 12px}
+.hint.warn button{font:inherit;padding:4px 12px;border-radius:6px;border:1px solid currentColor;background:#fff;color:inherit;cursor:pointer}
 </style>
 </head>
 <body>
@@ -85,6 +88,8 @@ select{font:inherit;border:1px solid var(--line);border-radius:8px;padding:4px 8
   <button type="button" class="btn" id="reset">重設示範</button>
   <a class="btn pri" href="/install#signup">免費試用 180 天</a>
   <div class="note">示範資料皆為虛構，只存在這個分頁；重新整理即恢復原狀。示範版不真的寄信、不產生 PDF、不連線任何伺服器。換「身分」可以看到不同角色的權限：業務看不到金額與帳務。</div>
+  <div class="hint warn" id="inapp">偵測到你正在 App 內建瀏覽器中開啟，示範可能無法執行。請點右上角「⋯」選「用瀏覽器開啟」，或 <button type="button" id="cpurl">複製網址</button> 後貼到 Safari／Chrome。</div>
+  <div class="hint">💻 建議用電腦體驗，效果最好。手機請用原生瀏覽器（Safari、Chrome）開啟；Facebook、Instagram、Threads、LINE 等社群 App 內建的瀏覽器可能跑不出來。</div>
   <div class="route" role="group" aria-label="試玩路線">
     <span class="lbl">試玩路線</span>
     <button type="button" class="chip" data-go="case">① 案件與利潤</button>
@@ -110,7 +115,7 @@ select{font:inherit;border:1px solid var(--line);border-radius:8px;padding:4px 8
   </section>
 </main>
 <div class="toast" id="toast" role="status"></div>
-<script src="runtime.js?v=mvcjuz35"></script>
+<script src="runtime.js?v=mvclk7v5"></script>
 <script>
 (function () {
   var NAMES = { 'clerk@demo.tw': '林經辦（經辦）', 'fin@demo.tw': '陳會計（財務）', 'sales@demo.tw': '張業務（業務）', 'owner@demo.tw': '王老闆（管理員）' };
@@ -176,6 +181,9 @@ select{font:inherit;border:1px solid var(--line);border-radius:8px;padding:4px 8
   loadAdmin(); loadPayee(t && [].some.call(pick.options, function (o) { return o.value === t; }) ? t : pick.value);
   if (t) tab('ph');
 })();
+</script>
+<script>
+(function(){try{var ua=navigator.userAgent||'';if(/FBAN|FBAV|FB_IAB|Instagram|Line\/|Threads|MicroMessenger|TikTok|BytedanceWebview|Twitter/i.test(ua)){var w=document.getElementById('inapp');w.style.display='flex';document.getElementById('cpurl').onclick=function(){var u=location.href,b=this;function ok(){b.textContent='已複製'}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(ok,function(){prompt('請複製網址',u)})}else{prompt('請複製網址',u)}}}}catch(e){}})();
 </script>
 </body>
 </html>
