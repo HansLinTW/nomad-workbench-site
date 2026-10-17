@@ -16,7 +16,7 @@
 <title>Nomad Workbench 安裝說明與免費試用 180 天</title>
 <meta name="description" content="免費試用 Nomad Workbench 180 天（往來、帳務、勞報單）：填表後金鑰自動寄到信箱，依 8 個步驟約 30 分鐘完成安裝（Google Cloud 專案、建立副本、部署、授權金鑰），安裝精靈全程自動檢查。">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://hanslintw.github.io/install.html">
+<link rel="canonical" href="https://workbench.remonnomad.com/install">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#0E6B5A">
@@ -25,14 +25,14 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:title" content="Nomad Workbench 安裝說明與免費試用 180 天">
 <meta property="og:description" content="免費試用 Nomad Workbench 180 天（往來、帳務、勞報單）：填表後金鑰自動寄到信箱，依 8 個步驟約 30 分鐘完成安裝（Google Cloud 專案、建立副本、部署、授權金鑰），安裝精靈全程自動檢查。">
-<meta property="og:url" content="https://hanslintw.github.io/install.html">
-<meta property="og:image" content="https://hanslintw.github.io/og-image.png">
+<meta property="og:url" content="https://workbench.remonnomad.com/install">
+<meta property="og:image" content="https://workbench.remonnomad.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Nomad Workbench 安裝說明與免費試用 180 天">
 <meta name="twitter:description" content="免費試用 Nomad Workbench 180 天（往來、帳務、勞報單）：填表後金鑰自動寄到信箱，依 8 個步驟約 30 分鐘完成安裝（Google Cloud 專案、建立副本、部署、授權金鑰），安裝精靈全程自動檢查。">
-<meta name="twitter:image" content="https://hanslintw.github.io/og-image.png">
+<meta name="twitter:image" content="https://workbench.remonnomad.com/og-image.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"為什麼一定要建立 Google Cloud 專案？","acceptedAnswer":{"@type":"Answer","text":"系統要靠它安全地更新你帳號裡的程式。法規參數或功能更新時，只要在後台按一下更新，不用重新安裝。不需要付費，也不用綁信用卡。"}},{"@type":"Question","name":"安裝時出現「Google 尚未驗證這個應用程式」安全嗎？","acceptedAnswer":{"@type":"Answer","text":"這是因為程式複製到你自己的帳號裡執行，Google 視為你自己的程式，不會經過審查。資料只在你的帳號裡流動，不會送到第三方。"}},{"@type":"Question","name":"安裝 Nomad Workbench 需要多久？","acceptedAnswer":{"@type":"Answer","text":"依安裝說明約 30 分鐘，安裝精靈會自動檢查每一步，做錯會直接提示。"}},{"@type":"Question","name":"系統供應商看得到我的資料嗎？","acceptedAnswer":{"@type":"Answer","text":"看不到。所有資料都存在你自己的 Google 帳號，授權中心只會收到每月張數這類統計數字。"}}]}</script>
 <!-- /SEO -->
 <link rel="stylesheet" href="style.css">
@@ -64,7 +64,7 @@ table{table-layout:auto}td,th{overflow-wrap:anywhere}
 </head>
 <body>
 <div class="wrap">
-  <header><a href="index.html" style="display:flex;gap:12px;align-items:center;color:inherit;text-decoration:none"><div class="mk">N</div><div><b>Nomad Workbench</b><span>安裝說明</span></div></a></header>
+  <header><a href="/" style="display:flex;gap:12px;align-items:center;color:inherit;text-decoration:none"><div class="mk">N</div><div><b>Nomad Workbench</b><span>安裝說明</span></div></a></header>
 
   <section class="card">
     <h1>Nomad Workbench 自行安裝說明</h1>
@@ -102,7 +102,7 @@ table{table-layout:auto}td,th{overflow-wrap:anywhere}
       <label class="fld"><span>若會用到勞報單，每月大約幾張（選填）</span>
         <select name="volume"><option value="">請選擇</option><option>10 張以下</option><option>10–50 張</option><option>50–200 張</option><option>200 張以上</option></select></label>
       <label class="hp" aria-hidden="true">網站<input name="website" tabindex="-1" autocomplete="off"></label>
-      <label class="chk"><input type="checkbox" name="consent"> 我已閱讀並同意<a href="privacy.html" target="_blank">隱私權政策</a>與<a href="terms.html" target="_blank">服務條款</a></label>
+      <label class="chk"><input type="checkbox" name="consent"> 我已閱讀並同意<a href="/privacy" target="_blank">隱私權政策</a>與<a href="/terms" target="_blank">服務條款</a></label>
       <p class="sub-tip">Email 請填之後要用來安裝系統的 Google 帳號信箱，或你常用的信箱。</p>
       <div class="row-btn"><button type="submit" class="btn" id="sbtn">寄給我試用金鑰</button><span id="smsg" role="status" aria-live="polite"></span></div>
     </form>
@@ -130,10 +130,10 @@ table{table-layout:auto}td,th{overflow-wrap:anywhere}
     <ol>
       <li>在「品牌」頁填入下列網址，<b>不要上傳標誌</b>（上傳標誌會需要 Google 審查）：
         <table>
-          <tr><td>應用程式首頁</td><td><span class="kbd">https://hanslintw.github.io/</span></td></tr>
-          <tr><td>隱私權政策</td><td><span class="kbd">https://hanslintw.github.io/privacy.html</span></td></tr>
-          <tr><td>服務條款</td><td><span class="kbd">https://hanslintw.github.io/terms.html</span></td></tr>
-          <tr><td>授權網域</td><td><span class="kbd">hanslintw.github.io</span></td></tr>
+          <tr><td>應用程式首頁</td><td><span class="kbd">https://workbench.remonnomad.com/</span></td></tr>
+          <tr><td>隱私權政策</td><td><span class="kbd">https://workbench.remonnomad.com/privacy</span></td></tr>
+          <tr><td>服務條款</td><td><span class="kbd">https://workbench.remonnomad.com/terms</span></td></tr>
+          <tr><td>授權網域</td><td><span class="kbd">remonnomad.com</span></td></tr>
         </table></li>
       <li>到「目標對象」按「<b>發布應用程式</b>」，切換為「正式版」。不切換的話，授權每 7 天就會失效。</li>
     </ol>
@@ -167,7 +167,7 @@ table{table-layout:auto}td,th{overflow-wrap:anywhere}
       <li>Google 會要求授權：選你的帳號 → 若出現「<b>Google 尚未驗證這個應用程式</b>」，按「進階」→「前往 Nomad Workbench（不安全）」→ 勾選全部權限 →「繼續」。</li>
       <li>右側的安裝精靈會檢查前面的步驟。前面幾項都打勾後，在「建立資料庫與資料夾」按「<b>建立</b>」。精靈最上方的「<b>重新檢查</b>」按鈕隨時可以按。</li>
     </ol>
-    <div class="tip"><b>為什麼會顯示「尚未驗證」？</b>因為這個程式是複製到你自己帳號裡執行的，Google 把它視為你自己寫的程式，所以不會經過 Google 審查。資料只在你的帳號裡流動，不會送到第三方。系統使用的權限與用途，請見<a href="privacy.html">隱私權政策</a>。</div>
+    <div class="tip"><b>為什麼會顯示「尚未驗證」？</b>因為這個程式是複製到你自己帳號裡執行的，Google 把它視為你自己寫的程式，所以不會經過 Google 審查。資料只在你的帳號裡流動，不會送到第三方。系統使用的權限與用途，請見<a href="/privacy">隱私權政策</a>。</div>
   </div></section>
 
   <section class="card step" id="s7"><div class="num">7</div><div>
@@ -194,12 +194,12 @@ table{table-layout:auto}td,th{overflow-wrap:anywhere}
     <p><b>為什麼一定要建立 Google Cloud 專案？</b><br>系統要靠它安全地更新你帳號裡的程式。法規參數（例如健保費率）調整或功能更新時，你只要在後台按一下更新，不用重新安裝。</p>
     <p><b>精靈說「需要重新同意權限」？</b><br>連結 Cloud 專案後，Google 會要求重新授權，這是正常的。關閉側邊欄，從選單重新開啟安裝精靈即可。</p>
     <p><b>「開啟 Apps Script API」之後還是顯示沒開？</b><br>這個設定約需 1–5 分鐘才會生效，稍等再按「重新檢查」。</p>
-    <p><b>系統供應商看得到我的資料嗎？</b><br>看不到。所有資料都存在你自己的 Google 帳號，授權中心只會收到每月張數這類統計數字，詳見<a href="privacy.html">隱私權政策</a>。</p>
+    <p><b>系統供應商看得到我的資料嗎？</b><br>看不到。所有資料都存在你自己的 Google 帳號，授權中心只會收到每月張數這類統計數字，詳見<a href="/privacy">隱私權政策</a>。</p>
     <h2>需要協助或代裝</h2>
     <p>我們提供<b>代為安裝</b>服務（另計費用）：約 30 分鐘的線上會議，由你登入自己的帳號，我們引導或代為操作，全程你都看得到。</p>
     <p>聯絡：<a href="mailto:lr@remonnomad.com">lr@remonnomad.com</a></p>
   </section>
-  <footer>© 2026 REMON nomad・<a href="index.html">首頁</a>・<a href="privacy.html">隱私權政策</a>・<a href="terms.html">服務條款</a></footer>
+  <footer>© 2026 REMON nomad・<a href="/">首頁</a>・<a href="/privacy">隱私權政策</a>・<a href="/terms">服務條款</a></footer>
 </div>
 <script src="config.js"></script>
 <script>

@@ -14,15 +14,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>勞報單系統線上試玩（免登入）｜勞報單簽核系統</title>
 <meta name="description" content="免登入、免安裝的勞務報酬單系統線上試玩：左邊企業後台開單，右邊用手機畫面簽署，二代健保與扣繳自動試算。資料皆為虛構，重新整理即恢復。">
-<link rel="canonical" href="https://hanslintw.github.io/demo/">
+<link rel="canonical" href="https://workbench.remonnomad.com/demo/">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="勞報單簽核系統｜REMON nomad">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:title" content="勞報單系統線上試玩（免登入）">
 <meta property="og:description" content="左邊開單、右邊用手機簽名，完整流程跑一遍。資料都是假的，放心亂按。">
-<meta property="og:url" content="https://hanslintw.github.io/demo/">
-<meta property="og:image" content="https://hanslintw.github.io/og-image.png">
+<meta property="og:url" content="https://workbench.remonnomad.com/demo/">
+<meta property="og:image" content="https://workbench.remonnomad.com/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <style>
 :root{--c:#0E6B5A;--ink:#17201D;--mute:#5B6661;--line:#DCE2DF;--bg:#E9EDEB;--tint:#E3F1EC;--warn:#8A5A00;--warnbg:#FFF4DB}
@@ -71,7 +71,7 @@ select{font:inherit;border:1px solid var(--line);border-radius:8px;padding:4px 8
 </head>
 <body>
 <div class="top">
-  <a class="brand" href="../index.html"><span class="mk">勞</span><span><b>勞報單系統 線上試玩</b><span>v1.6.1・在瀏覽器中執行的完整示範</span></span></a>
+  <a class="brand" href="/"><span class="mk">勞</span><span><b>勞報單系統 線上試玩</b><span>v1.6.1・在瀏覽器中執行的完整示範</span></span></a>
   <span class="lbl">後台身分</span>
   <div class="seg" role="group" aria-label="後台身分">
     <button type="button" data-u="clerk@demo.tw" aria-pressed="false">經辦</button>
@@ -79,7 +79,7 @@ select{font:inherit;border:1px solid var(--line);border-radius:8px;padding:4px 8
     <button type="button" data-u="owner@demo.tw" aria-pressed="true">管理員</button>
   </div>
   <button type="button" class="btn" id="reset">重設示範</button>
-  <a class="btn pri" href="../index.html#contact">洽詢試用</a>
+  <a class="btn pri" href="/#contact">洽詢試用</a>
   <div class="note">示範資料皆為虛構，只存在這個分頁；重新整理即恢復原狀。示範版不寄信、不產生 PDF、不連線任何伺服器。</div>
 </div>
 <div class="tabs" role="tablist">
@@ -104,8 +104,8 @@ select{font:inherit;border:1px solid var(--line);border-radius:8px;padding:4px 8
   var fa = document.getElementById('fa'), fp = document.getElementById('fp'), pick = document.getElementById('pick');
   var user = 'owner@demo.tw', known = {}, tmr;
   function toast(m) { var t = document.getElementById('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(tmr); tmr = setTimeout(function () { t.classList.remove('on'); }, 3200); }
-  function loadAdmin() { fa.src = 'admin.html?user=' + encodeURIComponent(user); document.getElementById('who').textContent = '目前登入：' + NAMES[user]; }
-  function loadPayee(tok) { fp.src = tok ? 'payee.html?t=' + tok : 'about:blank'; }
+  function loadAdmin() { fa.src = 'admin?user=' + encodeURIComponent(user); document.getElementById('who').textContent = '目前登入：' + NAMES[user]; }
+  function loadPayee(tok) { fp.src = tok ? 'payee?t=' + tok : 'about:blank'; }
   function tab(p) {
     document.querySelectorAll('.tabs button').forEach(function (b) { b.setAttribute('aria-selected', b.getAttribute('data-p') === p ? 'true' : 'false'); });
     document.getElementById('p-adm').classList.toggle('on', p === 'adm');
