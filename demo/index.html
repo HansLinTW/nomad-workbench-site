@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YXK65GPQK0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YXK65GPQK0');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>勞報單系統線上試玩（免登入）｜勞報單簽核系統</title>
+<meta name="description" content="免登入、免安裝的勞務報酬單系統線上試玩：左邊企業後台開單，右邊用手機畫面簽署，二代健保與扣繳自動試算。資料皆為虛構，重新整理即恢復。">
+<link rel="canonical" href="https://hanslintw.github.io/demo/">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="勞報單簽核系統｜REMON nomad">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:title" content="勞報單系統線上試玩（免登入）">
+<meta property="og:description" content="左邊開單、右邊用手機簽名，完整流程跑一遍。資料都是假的，放心亂按。">
+<meta property="og:url" content="https://hanslintw.github.io/demo/">
+<meta property="og:image" content="https://hanslintw.github.io/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--c:#0E6B5A;--ink:#17201D;--mute:#5B6661;--line:#DCE2DF;--bg:#E9EDEB;--tint:#E3F1EC;--warn:#8A5A00;--warnbg:#FFF4DB}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 "Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;padding:10px 16px;background:#fff;border-bottom:1px solid var(--line)}
+.mk{width:32px;height:32px;border-radius:8px;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+.brand b{display:block;line-height:1.25;font-size:15px}.brand span{font-size:12px;color:var(--mute)}
+.brand{display:flex;gap:10px;align-items:center;margin-right:auto;text-decoration:none;color:inherit}
+.note{flex-basis:100%;order:9;background:var(--warnbg);color:var(--warn);border-radius:8px;padding:6px 10px;font-size:13px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:2px;background:#F7F9F8}
+.seg button{border:0;background:none;border-radius:999px;padding:5px 12px;font:inherit;color:var(--mute);cursor:pointer;min-height:32px}
+.seg button[aria-pressed=true]{background:var(--c);color:#fff}
+.lbl{font-size:12px;color:var(--mute)}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 12px;font:inherit;cursor:pointer;color:var(--ink);min-height:34px;text-decoration:none;display:inline-flex;align-items:center}
+.btn:hover{border-color:var(--c)}
+.btn.pri{background:var(--c);border-color:var(--c);color:#fff}
+main{flex:1;display:flex;gap:16px;padding:16px;min-height:0}
+.pane{display:flex;flex-direction:column;min-height:0;min-width:0}
+.pane h2{font-size:13px;font-weight:600;color:var(--mute);margin:0 0 8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.adm{flex:1}
+.adm iframe{flex:1;width:100%;border:1px solid var(--line);border-radius:12px;background:#fff}
+.ph{flex:none;width:400px}
+.phone{flex:1;width:100%;max-height:860px;border:10px solid #1d2422;border-radius:38px;overflow:hidden;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+.phone iframe{width:100%;height:100%;border:0;display:block}
+select{font:inherit;border:1px solid var(--line);border-radius:8px;padding:4px 8px;min-height:32px;max-width:100%;background:#fff}
+.tabs{display:none}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#17201D;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;max-width:calc(100% - 32px)}
+.toast.on{opacity:.95}
+@media (max-width:980px){
+  .top{gap:8px;padding:8px 16px}.top>.lbl,.brand>span>span{display:none}.brand b{font-size:14px}
+  .seg button{padding:4px 10px}.btn{min-height:32px;padding:4px 10px}
+  .note{font-size:12px;padding:5px 8px;line-height:1.5}
+  .tabs{display:flex;gap:6px;padding:10px 16px 0}
+  .tabs button{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px;font:inherit;cursor:pointer}
+  .tabs button[aria-selected=true]{border-color:var(--c);background:var(--tint);color:#0A4F42;font-weight:600}
+  main{padding:10px 0 0;gap:0}
+  .pane{display:none;width:100%}.pane.on{display:flex}
+  .pane h2{padding:0 16px}
+  .adm iframe{border-radius:0;border-left:0;border-right:0}
+  .phone{border:0;border-radius:0;max-height:none;box-shadow:none;border-top:1px solid var(--line)}
+  .ph{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="brand" href="../index.html"><span class="mk">勞</span><span><b>勞報單系統 線上試玩</b><span>v1.6.1・在瀏覽器中執行的完整示範</span></span></a>
+  <span class="lbl">後台身分</span>
+  <div class="seg" role="group" aria-label="後台身分">
+    <button type="button" data-u="clerk@demo.tw" aria-pressed="false">經辦</button>
+    <button type="button" data-u="fin@demo.tw" aria-pressed="false">財務</button>
+    <button type="button" data-u="owner@demo.tw" aria-pressed="true">管理員</button>
+  </div>
+  <button type="button" class="btn" id="reset">重設示範</button>
+  <a class="btn pri" href="../index.html#contact">洽詢試用</a>
+  <div class="note">示範資料皆為虛構，只存在這個分頁；重新整理即恢復原狀。示範版不寄信、不產生 PDF、不連線任何伺服器。</div>
+</div>
+<div class="tabs" role="tablist">
+  <button type="button" role="tab" data-p="adm" aria-selected="true">企業後台</button>
+  <button type="button" role="tab" data-p="ph" aria-selected="false">所得人手機</button>
+</div>
+<main>
+  <section class="pane adm on" id="p-adm">
+    <h2>企業後台 <span class="lbl" id="who"></span></h2>
+    <iframe id="fa" title="企業後台"></iframe>
+  </section>
+  <section class="pane ph" id="p-ph">
+    <h2>所得人手機 <select id="pick" aria-label="選擇要以所得人身分開啟的單據"></select></h2>
+    <div class="phone"><iframe id="fp" title="所得人填寫頁"></iframe></div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<script src="runtime.js?v=muwsttms"></script>
+<script>
+(function () {
+  var NAMES = { 'clerk@demo.tw': '林經辦（經辦）', 'fin@demo.tw': '陳會計（財務）', 'owner@demo.tw': '王老闆（管理員）' };
+  var fa = document.getElementById('fa'), fp = document.getElementById('fp'), pick = document.getElementById('pick');
+  var user = 'owner@demo.tw', known = {}, tmr;
+  function toast(m) { var t = document.getElementById('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(tmr); tmr = setTimeout(function () { t.classList.remove('on'); }, 3200); }
+  function loadAdmin() { fa.src = 'admin.html?user=' + encodeURIComponent(user); document.getElementById('who').textContent = '目前登入：' + NAMES[user]; }
+  function loadPayee(tok) { fp.src = tok ? 'payee.html?t=' + tok : 'about:blank'; }
+  function tab(p) {
+    document.querySelectorAll('.tabs button').forEach(function (b) { b.setAttribute('aria-selected', b.getAttribute('data-p') === p ? 'true' : 'false'); });
+    document.getElementById('p-adm').classList.toggle('on', p === 'adm');
+    document.getElementById('p-ph').classList.toggle('on', p === 'ph');
+  }
+  var LABEL = { '已發送': '待簽署', '已鎖定': '已鎖定', '已簽署': '已簽署', '已撥款': '已撥款' };
+  function refreshPick(first) {
+    var list = window.__demoSlips().filter(function (s) { return s.token && LABEL[s.status]; });
+    var cur = pick.value, fresh = null;
+    pick.innerHTML = '';
+    list.forEach(function (s) {
+      var o = document.createElement('option'); o.value = s.token; o.textContent = s.name + '・' + s.id + '（' + LABEL[s.status] + '）'; pick.appendChild(o);
+      if (!first && !known[s.id] && s.status === '已發送') fresh = s;
+      known[s.id] = 1;
+    });
+    if (fresh) { pick.value = fresh.token; loadPayee(fresh.token); toast('已發送給「' + fresh.name + '」，右側手機可以直接填寫簽署'); return; }
+    if (cur && list.some(function (s) { return s.token === cur; })) pick.value = cur;
+  }
+  window.__demoOpenPayee = function (tok) { refreshPick(false); pick.value = tok; loadPayee(tok); tab('ph'); toast('已在「所得人手機」開啟這張單的填寫連結'); };
+  window.__demoAfter = function (fn, res) {
+    if (/^adm_/.test(fn)) refreshPick(false);
+    if (fn === 'api_submit' && res && res.ok) { toast('所得人已送出簽署，後台已更新'); refreshPick(false); loadAdmin(); }
+  };
+  document.querySelectorAll('.seg button').forEach(function (b) {
+    b.onclick = function () {
+      document.querySelectorAll('.seg button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      user = b.getAttribute('data-u'); loadAdmin(); tab('adm');
+    };
+  });
+  document.querySelectorAll('.tabs button').forEach(function (b) { b.onclick = function () { tab(b.getAttribute('data-p')); }; });
+  document.getElementById('reset').onclick = function () { location.href = location.pathname; };
+  pick.onchange = function () { loadPayee(pick.value); };
+  refreshPick(true);
+  var t = (new URLSearchParams(location.search).get('t') || '').replace(/[^0-9a-f]/gi, '');
+  if (t) { history.replaceState(null, '', location.pathname); toast('這是所得人收到的填寫連結（示範版重新載入後資料會重設）'); }
+  var first = window.__demoSlips().filter(function (s) { return s.status === '已發送' && s.token; }).pop();
+  if (first && !t) pick.value = first.token;
+  loadAdmin(); loadPayee(t && [].some.call(pick.options, function (o) { return o.value === t; }) ? t : pick.value);
+  if (t) tab('ph');
+})();
+</script>
+</body>
+</html>

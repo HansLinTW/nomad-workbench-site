@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YXK65GPQK0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YXK65GPQK0');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- SEO -->
+<title>隱私權政策｜Nomad Workbench</title>
+<meta name="description" content="Nomad Workbench 隱私權政策：所有單據與所得人資料存放在客戶自己的 Google 雲端，說明系統使用的 Google 權限與授權中心收到的統計資料。">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://hanslintw.github.io/privacy.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0E6B5A">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nomad Workbench｜REMON nomad">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:title" content="隱私權政策｜Nomad Workbench">
+<meta property="og:description" content="Nomad Workbench 隱私權政策：所有單據與所得人資料存放在客戶自己的 Google 雲端，說明系統使用的 Google 權限與授權中心收到的統計資料。">
+<meta property="og:url" content="https://hanslintw.github.io/privacy.html">
+<meta property="og:image" content="https://hanslintw.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="隱私權政策｜Nomad Workbench">
+<meta name="twitter:description" content="Nomad Workbench 隱私權政策：所有單據與所得人資料存放在客戶自己的 Google 雲端，說明系統使用的 Google 權限與授權中心收到的統計資料。">
+<meta name="twitter:image" content="https://hanslintw.github.io/og-image.png">
+<!-- /SEO -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header><div class="mk">N</div><div><b>Nomad Workbench</b><span>隱私權政策</span></div></header>
+  <section class="card">
+    <h1>隱私權政策</h1>
+    <p>生效日期：2026 年 10 月 13 日</p>
+    <p>本政策說明「Nomad Workbench」（以下稱「本系統」，由 REMON nomad 提供）如何處理資料。本系統以 Google Apps Script 安裝在使用本系統的企業（以下稱「客戶」）自己的 Google 帳號中執行。</p>
+
+    <h2>一、資料存放在哪裡</h2>
+    <p>本系統處理的單據、金額、所得人姓名、身分證字號、地址、電話、銀行帳戶、證件與存摺影像、簽名及稽核紀錄；以及客戶在「往來」與「帳務」模組中建立的客戶、廠商與往來對象聯絡資料、案件、互動紀錄、媒體與 KOL 合作紀錄、應收應付與收付款紀錄，<b>全部儲存在客戶自己的 Google 試算表與 Google 雲端硬碟</b>。系統供應商不會取得、儲存或存取上述資料。</p>
+
+    <h2>二、本系統存取的 Google 使用者資料</h2>
+    <p>授權時，本系統會要求以下 Google 權限，<b>僅用於在客戶自己的帳號中執行本系統的功能</b>：</p>
+    <table>
+      <tr><th>權限</th><th>用途</th></tr>
+      <tr><td>Google 試算表</td><td>讀寫本系統的控制台與資料庫試算表</td></tr>
+      <tr><td>Google 雲端硬碟</td><td>建立資料夾，存放證件影像、簽名與報酬單 PDF</td></tr>
+      <tr><td>Google 文件</td><td>依報酬單範本產生 PDF</td></tr>
+      <tr><td>以使用者身分傳送電子郵件</td><td>寄送簽署連結、簽署完成與撥款通知，以及合約到期提醒</td></tr>
+      <tr><td>連線至外部服務</td><td>向授權中心驗證授權與取得參數、程式更新</td></tr>
+      <tr><td>管理 Apps Script 專案與部署</td><td>僅用於更新本系統自己的程式（一鍵更新）</td></tr>
+      <tr><td>電子郵件地址、觸發器、對話框</td><td>辨識後台登入者、執行每日排程、顯示操作畫面</td></tr>
+    </table>
+    <p>本系統對 Google 使用者資料的使用與傳輸，遵守 <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API 服務使用者資料政策</a>，包括有限使用（Limited Use）規定：不將資料用於廣告、不出售、不轉移給第三方，也不供人員閱讀，除非為提供或改善客戶要求的功能、遵守法律，或經客戶明確同意。</p>
+
+    <h2>三、授權中心收到的資料</h2>
+    <p>為驗證授權與提供更新，本系統每 12 小時向系統供應商的授權中心傳送：授權金鑰、Apps Script 專案 ID、系統版本、公司名稱、安裝是否完成，以及本月與上月的單據<b>張數</b>（開單、發送、簽署、撥款各幾張），若使用「往來」模組，另包含往來對象、案件與互動紀錄的<b>筆數</b>。<b>不包含任何所得人或往來對象的姓名、身分證字號、帳戶、地址、電話、Email、案件內容、金額或影像。</b>張數用於方案上限計算、客服與改善服務。授權中心另保存驗證紀錄（金鑰以遮罩方式記錄），供授權管理與客服使用，保存至授權關係結束後一年。</p>
+
+    <h2>四、申請試用時填寫的資料</h2>
+    <p>在網站申請試用時，我們會收集你填寫的公司或工作室名稱、聯絡人、Email、電話與預估用量，<b>僅用於寄送授權金鑰、提供客服與試用後的聯繫</b>，儲存在系統供應商的授權中心，不會出售或提供給第三方。如需查詢、更正或刪除，請來信。</p>
+
+    <h2>五、資料保存與刪除</h2>
+    <p>單據與所得人資料由客戶自行保存與刪除；請依稅法及相關法規之保存年限處理。客戶停止使用時，資料仍留在客戶自己的雲端硬碟。如需刪除授權中心的紀錄，請來信要求。</p>
+
+    <h2>六、安全措施</h2>
+    <ul>
+      <li>所得人填寫連結使用隨機產生的長代碼，限期有效，驗證錯誤達上限即鎖定</li>
+      <li>企業後台依角色控管，畫面上的身分證、帳號、地址一律遮罩</li>
+      <li>系統日誌不記錄所得人與往來對象的個人資料</li>
+      <li>「往來」「帳務」的金額、成本與利潤依角色控管，未被授權的成員（例如業務）看不到</li>
+    </ul>
+
+    <h2>七、聯絡我們</h2>
+    <p>如對本政策有任何問題：<a href="mailto:lr@remonnomad.com">lr@remonnomad.com</a></p>
+    <p>本政策更新時，將公布於本頁並更新生效日期。</p>
+  </section>
+  <footer><a href="index.html">回首頁</a>・<a href="terms.html">服務條款</a></footer>
+</div>
+</body>
+</html>

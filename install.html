@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YXK65GPQK0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YXK65GPQK0');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- SEO -->
+<title>Nomad Workbench 安裝說明與免費試用 180 天</title>
+<meta name="description" content="免費試用 Nomad Workbench 180 天（往來、帳務、勞報單）：填表後金鑰自動寄到信箱，依 8 個步驟約 30 分鐘完成安裝（Google Cloud 專案、建立副本、部署、授權金鑰），安裝精靈全程自動檢查。">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://hanslintw.github.io/install.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0E6B5A">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nomad Workbench｜REMON nomad">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:title" content="Nomad Workbench 安裝說明與免費試用 180 天">
+<meta property="og:description" content="免費試用 Nomad Workbench 180 天（往來、帳務、勞報單）：填表後金鑰自動寄到信箱，依 8 個步驟約 30 分鐘完成安裝（Google Cloud 專案、建立副本、部署、授權金鑰），安裝精靈全程自動檢查。">
+<meta property="og:url" content="https://hanslintw.github.io/install.html">
+<meta property="og:image" content="https://hanslintw.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nomad Workbench 安裝說明與免費試用 180 天">
+<meta name="twitter:description" content="免費試用 Nomad Workbench 180 天（往來、帳務、勞報單）：填表後金鑰自動寄到信箱，依 8 個步驟約 30 分鐘完成安裝（Google Cloud 專案、建立副本、部署、授權金鑰），安裝精靈全程自動檢查。">
+<meta name="twitter:image" content="https://hanslintw.github.io/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"為什麼一定要建立 Google Cloud 專案？","acceptedAnswer":{"@type":"Answer","text":"系統要靠它安全地更新你帳號裡的程式。法規參數或功能更新時，只要在後台按一下更新，不用重新安裝。不需要付費，也不用綁信用卡。"}},{"@type":"Question","name":"安裝時出現「Google 尚未驗證這個應用程式」安全嗎？","acceptedAnswer":{"@type":"Answer","text":"這是因為程式複製到你自己的帳號裡執行，Google 視為你自己的程式，不會經過審查。資料只在你的帳號裡流動，不會送到第三方。"}},{"@type":"Question","name":"安裝 Nomad Workbench 需要多久？","acceptedAnswer":{"@type":"Answer","text":"依安裝說明約 30 分鐘，安裝精靈會自動檢查每一步，做錯會直接提示。"}},{"@type":"Question","name":"系統供應商看得到我的資料嗎？","acceptedAnswer":{"@type":"Answer","text":"看不到。所有資料都存在你自己的 Google 帳號，授權中心只會收到每月張數這類統計數字。"}}]}</script>
+<!-- /SEO -->
+<link rel="stylesheet" href="style.css">
+<style>
+.step{display:flex;gap:14px;align-items:flex-start}
+.num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin-top:2px}
+.step h2{margin-top:0}
+.step>div:not(.num){min-width:0;flex:1}
+td:first-child{white-space:nowrap}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.fld{display:block;margin:0 0 12px}.fld span{display:block;font-size:14px;color:var(--mute);margin-bottom:4px}.fld i{color:#B42318;font-style:normal}
+.fld input,.fld select{width:100%;font:inherit;font-size:16px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.fld input:focus,.fld select:focus{outline:2px solid var(--c);outline-offset:0;border-color:var(--c)}
+.fld.err input{border-color:#B42318}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:14px;margin:4px 0 6px}.chk input{margin-top:5px}
+.sub-tip{font-size:13px;color:var(--mute);margin:0 0 12px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.row-btn{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+button.btn{border:0;cursor:pointer;font:inherit;font-weight:600}button.btn:disabled{opacity:.6;cursor:default}
+#smsg{font-size:14px}#smsg.ok{color:#0A4F42;font-weight:600}#smsg.bad{color:#B42318}
+.done-box{background:var(--tint);border-radius:12px;padding:16px 18px}
+table{table-layout:auto}td,th{overflow-wrap:anywhere}
+.kbd{background:#EEF2F0;border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,monospace;font-size:14px;word-break:break-all}
+.tip{background:var(--tint);border-radius:10px;padding:10px 14px;font-size:14px;margin:8px 0 12px}
+.warn{background:#FFF4DB;color:#6B4100;border-radius:10px;padding:10px 14px;font-size:14px;margin:8px 0 12px}
+.toc{columns:2;column-gap:24px;padding-left:20px}
+@media (max-width:560px){.f2{grid-template-columns:1fr}.toc{columns:1}.step{gap:10px}td:first-child{white-space:normal}td,th{padding:6px 4px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><a href="index.html" style="display:flex;gap:12px;align-items:center;color:inherit;text-decoration:none"><div class="mk">N</div><div><b>Nomad Workbench</b><span>安裝說明</span></div></a></header>
+
+  <section class="card">
+    <h1>Nomad Workbench 自行安裝說明</h1>
+    <p class="lead">約 30 分鐘。全程在貴公司自己的 Google 帳號中操作，系統供應商看不到你的任何資料。</p>
+    <h2>開始前請準備</h2>
+    <ul>
+      <li><b>一個 Google 帳號</b>：之後所有單據、證件影像都會存在這個帳號的雲端硬碟。建議用公司的 Google Workspace 帳號（例如 <span class="kbd">admin@貴公司網域</span>）；個人 Gmail 也可以。</li>
+      <li><b>授權金鑰 Email</b>：在<a href="#signup">下方表單</a>申請免費試用，或購買後，你會收到一封來自 REMON nomad 的信，裡面有授權金鑰、「建立副本」按鈕和這份安裝說明的連結。沒收到的話，請看一下垃圾郵件匣。</li>
+      <li>用<b>電腦</b>操作，建議使用 Chrome，並只登入這一個 Google 帳號（多帳號同時登入容易出錯）。</li>
+    </ul>
+    <div class="tip">安裝過程中，試算表的「安裝精靈」會自動檢查每一步，做錯會告訴你哪裡要改。卡住了也可以<a href="#help">請我們代裝</a>。</div>
+    <ol class="toc">
+      <li><a href="#s1">建立 Google Cloud 專案</a></li>
+      <li><a href="#oauth">設定 OAuth 同意畫面</a></li>
+      <li><a href="#s3">記下專案編號</a></li>
+      <li><a href="#s4">建立副本並連結專案</a></li>
+      <li><a href="#s5">開啟 Apps Script API</a></li>
+      <li><a href="#s6">安裝精靈：建立資料庫</a></li>
+      <li><a href="#s7">部署兩個網頁</a></li>
+      <li><a href="#s8">輸入金鑰，完成</a></li>
+    </ol>
+  </section>
+
+
+  <section class="card" id="signup">
+    <h2 style="margin-top:0">免費試用 180 天</h2>
+    <p>填寫後，試用金鑰會立即寄到你的信箱。試用 180 天，往來、帳務、勞報單三個模組全開（勞報單每月可發送 20 張），資料一樣存放在你自己的 Google 帳號。</p>
+    <form id="sf" novalidate>
+      <div class="f2">
+        <label class="fld"><span>公司或工作室名稱 <i>*</i></span><input name="company" maxlength="60" autocomplete="organization" required></label>
+        <label class="fld"><span>聯絡人</span><input name="contact" maxlength="30" autocomplete="name"></label>
+        <label class="fld"><span>Email <i>*</i></span><input name="email" type="email" maxlength="120" autocomplete="email" inputmode="email" required></label>
+        <label class="fld"><span>電話</span><input name="phone" type="tel" maxlength="20" autocomplete="tel"></label>
+      </div>
+      <label class="fld"><span>若會用到勞報單，每月大約幾張（選填）</span>
+        <select name="volume"><option value="">請選擇</option><option>10 張以下</option><option>10–50 張</option><option>50–200 張</option><option>200 張以上</option></select></label>
+      <label class="hp" aria-hidden="true">網站<input name="website" tabindex="-1" autocomplete="off"></label>
+      <label class="chk"><input type="checkbox" name="consent"> 我已閱讀並同意<a href="privacy.html" target="_blank">隱私權政策</a>與<a href="terms.html" target="_blank">服務條款</a></label>
+      <p class="sub-tip">Email 請填之後要用來安裝系統的 Google 帳號信箱，或你常用的信箱。</p>
+      <div class="row-btn"><button type="submit" class="btn" id="sbtn">寄給我試用金鑰</button><span id="smsg" role="status" aria-live="polite"></span></div>
+    </form>
+  </section>
+
+  <section class="card step" id="s1"><div class="num">1</div><div>
+    <h2>建立 Google Cloud 專案並啟用 API</h2>
+    <p>系統需要一個屬於你自己的 Google Cloud 專案，才能自動接收新版本與法規參數。<b>不需要付費，也不用綁信用卡。</b>請用之後要存放資料的那個 Google 帳號登入。</p>
+    <ol>
+      <li>開啟 <a href="https://console.cloud.google.com/projectcreate" target="_blank">建立專案</a>。專案名稱只能用英文、數字和連字號，例如 <span class="kbd">nwb-acme</span>，按「建立」。</li>
+      <li>開啟 <a href="https://console.cloud.google.com/flows/enableapi?apiid=script.googleapis.com,drive.googleapis.com,sheets.googleapis.com,docs.googleapis.com" target="_blank">一次啟用 4 個 API</a>。上方確認選的是剛建立的專案，按「下一步」→「啟用」。會啟用 Apps Script、Drive、Sheets、Docs 這 4 個 API。</li>
+    </ol>
+  </div></section>
+
+  <section class="card step" id="oauth"><div class="num">2</div><div>
+    <h2>設定 OAuth 同意畫面</h2>
+    <p>開啟 <a href="https://console.cloud.google.com/auth/overview">OAuth 同意畫面</a>，按「開始」，依你的帳號類型填寫：</p>
+    <table>
+      <tr><th></th><th>公司 Workspace 帳號</th><th>個人 Gmail</th></tr>
+      <tr><td>目標對象</td><td><b>內部</b></td><td><b>外部</b></td></tr>
+      <tr><td>應用程式名稱</td><td colspan="2"><span class="kbd">Nomad Workbench</span>（也可以用縮寫 <span class="kbd">NWB</span>）</td></tr>
+      <tr><td>使用者支援 Email、聯絡資訊</td><td colspan="2">你自己的 Email</td></tr>
+    </table>
+    <p><b>個人 Gmail 還要多做兩件事：</b></p>
+    <ol>
+      <li>在「品牌」頁填入下列網址，<b>不要上傳標誌</b>（上傳標誌會需要 Google 審查）：
+        <table>
+          <tr><td>應用程式首頁</td><td><span class="kbd">https://hanslintw.github.io/</span></td></tr>
+          <tr><td>隱私權政策</td><td><span class="kbd">https://hanslintw.github.io/privacy.html</span></td></tr>
+          <tr><td>服務條款</td><td><span class="kbd">https://hanslintw.github.io/terms.html</span></td></tr>
+          <tr><td>授權網域</td><td><span class="kbd">hanslintw.github.io</span></td></tr>
+        </table></li>
+      <li>到「目標對象」按「<b>發布應用程式</b>」，切換為「正式版」。不切換的話，授權每 7 天就會失效。</li>
+    </ol>
+  </div></section>
+
+  <section class="card step" id="s3"><div class="num">3</div><div>
+    <h2>記下專案編號</h2>
+    <p>開啟 <a href="https://console.cloud.google.com/home/dashboard" target="_blank">Cloud 主控台首頁</a>，確認上方選的是剛建立的專案，在「專案資訊」找到「<b>專案編號</b>」並複製。</p>
+    <div class="tip">專案編號是一串<b>數字</b>（例如 <span class="kbd">123456789012</span>），不是英文的專案 ID。先把它貼到記事本，下一步會用到。Google Cloud 的設定到這裡就完成了。</div>
+  </div></section>
+
+  <section class="card step" id="s4"><div class="num">4</div><div>
+    <h2>建立副本，並連結 Cloud 專案</h2>
+    <ol>
+      <li>點授權金鑰 Email 裡的「<b>建立副本</b>」按鈕，再按 Google 畫面上的「<b>建立副本</b>」。系統程式會一起複製到你的雲端硬碟。試算表內容先不用動。</li>
+      <li>在剛建立的試算表上方選「<b>擴充功能 › Apps Script</b>」。</li>
+      <li>Apps Script 左側點齒輪「<b>專案設定</b>」→ 往下找到「Google Cloud Platform (GCP) 專案」→「<b>變更專案</b>」，貼上步驟 3 記下的專案編號，按「<b>設定專案</b>」。</li>
+    </ol>
+    <p>這個 Apps Script 分頁請先保留，步驟 7 部署時會再用到。</p>
+  </div></section>
+
+  <section class="card step" id="s5"><div class="num">5</div><div>
+    <h2>開啟 Apps Script API</h2>
+    <p>開啟 <a href="https://script.google.com/home/usersettings" target="_blank">Apps Script 使用者設定</a>，把「Google Apps Script API」切換為「<b>開啟</b>」。</p>
+  </div></section>
+
+  <section class="card step" id="s6"><div class="num">6</div><div>
+    <h2>開啟安裝精靈，建立資料庫</h2>
+    <ol>
+      <li>回到試算表，重新整理頁面，上方會出現「Nomad Workbench」選單。選「<b>Nomad Workbench › 安裝精靈</b>」。</li>
+      <li>Google 會要求授權：選你的帳號 → 若出現「<b>Google 尚未驗證這個應用程式</b>」，按「進階」→「前往 Nomad Workbench（不安全）」→ 勾選全部權限 →「繼續」。</li>
+      <li>右側的安裝精靈會檢查前面的步驟。前面幾項都打勾後，在「建立資料庫與資料夾」按「<b>建立</b>」。精靈最上方的「<b>重新檢查</b>」按鈕隨時可以按。</li>
+    </ol>
+    <div class="tip"><b>為什麼會顯示「尚未驗證」？</b>因為這個程式是複製到你自己帳號裡執行的，Google 把它視為你自己寫的程式，所以不會經過 Google 審查。資料只在你的帳號裡流動，不會送到第三方。系統使用的權限與用途，請見<a href="privacy.html">隱私權政策</a>。</div>
+  </div></section>
+
+  <section class="card step" id="s7"><div class="num">7</div><div>
+    <h2>部署兩個網頁</h2>
+    <p>回到步驟 4 的 Apps Script 分頁（若已關掉，從試算表「擴充功能 › Apps Script」再開一次），右上角「<b>部署 › 新增部署</b>」，在「選取類型」旁的齒輪選「<b>網頁應用程式</b>」。這個動作做<b>兩次</b>：</p>
+    <table>
+      <tr><th></th><th>說明</th><th>執行身分</th><th>具有存取權的使用者</th></tr>
+      <tr><td>第 1 個</td><td>所得人填寫頁</td><td>我</td><td><b>所有人</b></td></tr>
+      <tr><td>第 2 個</td><td>企業後台</td><td>我</td><td><b>網域內的使用者</b><br><span style="font-size:13px;color:var(--mute)">個人 Gmail 選「擁有 Google 帳戶的使用者」</span></td></tr>
+    </table>
+    <p>兩個都部署好後，回到安裝精靈，按「部署兩個網頁」這一步裡的「<b>重新檢查</b>」（精靈最上方也有一顆）。精靈會自動找到兩個網址並填入設定，不用自己複製貼上。</p>
+    <div class="warn">「執行身分」兩個都要選「我」。如果選成「存取網頁應用程式的使用者」，所得人會無法開啟填寫頁。</div>
+  </div></section>
+
+  <section class="card step" id="s8"><div class="num">8</div><div>
+    <h2>輸入授權金鑰，完成</h2>
+    <p>在安裝精靈最後一步貼上金鑰，按「驗證並啟用」。全部打勾後按「<b>開啟企業後台</b>」，建議把後台網址加入瀏覽器書籤。</p>
+    <p>接著到後台「設定 › 成員與權限」加入經辦與財務人員，到「設定 › 公司資料」填好公司名稱、統一編號等資料，就可以開始開單。</p>
+    <div class="tip">之後有新版本時，管理員會在後台看到提示，按一下就能完成更新。資料不會受影響。</div>
+  </div></section>
+
+  <section class="card" id="help">
+    <h2>常見問題</h2>
+    <p><b>為什麼一定要建立 Google Cloud 專案？</b><br>系統要靠它安全地更新你帳號裡的程式。法規參數（例如健保費率）調整或功能更新時，你只要在後台按一下更新，不用重新安裝。</p>
+    <p><b>精靈說「需要重新同意權限」？</b><br>連結 Cloud 專案後，Google 會要求重新授權，這是正常的。關閉側邊欄，從選單重新開啟安裝精靈即可。</p>
+    <p><b>「開啟 Apps Script API」之後還是顯示沒開？</b><br>這個設定約需 1–5 分鐘才會生效，稍等再按「重新檢查」。</p>
+    <p><b>系統供應商看得到我的資料嗎？</b><br>看不到。所有資料都存在你自己的 Google 帳號，授權中心只會收到每月張數這類統計數字，詳見<a href="privacy.html">隱私權政策</a>。</p>
+    <h2>需要協助或代裝</h2>
+    <p>我們提供<b>代為安裝</b>服務（另計費用）：約 30 分鐘的線上會議，由你登入自己的帳號，我們引導或代為操作，全程你都看得到。</p>
+    <p>聯絡：<a href="mailto:lr@remonnomad.com">lr@remonnomad.com</a></p>
+  </section>
+  <footer>© 2026 REMON nomad・<a href="index.html">首頁</a>・<a href="privacy.html">隱私權政策</a>・<a href="terms.html">服務條款</a></footer>
+</div>
+<script src="config.js"></script>
+<script>
+(function () {
+  var f = document.getElementById('sf'), btn = document.getElementById('sbtn'), msg = document.getElementById('smsg');
+  var MAIL = 'lr@remonnomad.com';
+  var say = function (t, cls) { msg.textContent = t; msg.className = cls || ''; };
+  if (!window.LR_CENTER_URL) {
+    f.innerHTML = '<p>線上申請即將開放。現在請來信 <a href="mailto:' + MAIL + '?subject=' + encodeURIComponent('申請試用 Nomad Workbench') + '">' + MAIL + '</a>，附上公司名稱，我們會寄試用金鑰給你。</p>';
+    return;
+  }
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    [].forEach.call(f.querySelectorAll('.fld'), function (x) { x.classList.remove('err'); });
+    var v = function (n) { return (f.elements[n].value || '').trim(); };
+    var bad = function (n, t) { var el = f.elements[n]; if (el.closest('.fld')) el.closest('.fld').classList.add('err'); el.focus(); say(t, 'bad'); };
+    if (v('company').length < 2) return bad('company', '請填寫公司或工作室名稱。');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(v('email'))) return bad('email', '請填寫正確的 Email。');
+    if (!f.elements.consent.checked) return bad('consent', '請勾選同意隱私權政策與服務條款。');
+    btn.disabled = true; say('送出中…');
+    var body = { action: 'signup', company: v('company'), contact: v('contact'), email: v('email'), phone: v('phone'), volume: v('volume'), website: v('website'), consent: true };
+    var ctl = window.AbortController ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctl) ctl.abort(); }, 30000);
+    fetch(window.LR_CENTER_URL, { method: 'POST', body: JSON.stringify(body), redirect: 'follow', signal: ctl ? ctl.signal : undefined })
+      .then(function (r) { return r.json(); })
+      .then(function (r) {
+        clearTimeout(timer);
+        if (r && r.ok) {
+          f.outerHTML = '<div class="done-box" role="status"><b>' + (r.status === 'resent' ? '已重新寄出' : '申請完成') + '</b><p style="margin:6px 0 0">' +
+            String(r.message || '').replace(/[<>&]/g, '') + '</p><p style="margin:6px 0 0;font-size:14px">收到信後，從下方第 1 步開始安裝。</p></div>';
+          return;
+        }
+        btn.disabled = false;
+        if (r && r.field && f.elements[r.field]) bad(r.field, r.message); else say((r && r.message) || '送出失敗，請稍後再試。', 'bad');
+      })
+      .catch(function () {
+        clearTimeout(timer); btn.disabled = false;
+        say('連線失敗，請稍後再試，或來信 ' + MAIL + '。', 'bad');
+      });
+  });
+})();
+</script>
+</body>
+</html>

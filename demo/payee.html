@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><script>
+(function () {
+  var P = window.parent;
+  if (P === window) { location.replace('index.html' + (/payee/.test(location.pathname) ? location.search : '')); return; }
+  var user = new URLSearchParams(location.search).get('user') || '';
+  // 後台裡的「開啟填寫連結」改在右側手機開啟（新分頁會是一份全新的示範資料）
+  var toPhone = function (u) { var m = String(u || '').match(/payee.html?t=([0-9a-f]+)/i); if (m && P.__demoOpenPayee) { P.__demoOpenPayee(m[1]); return true; } return false; };
+  var wo = window.open; window.open = function (u) { if (toPhone(u)) return null; return wo.apply(window, arguments); };
+  document.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('a[href]'); if (a && toPhone(a.href)) e.preventDefault(); }, true);
+  window.google = { script: { get run() {
+    var s, f;
+    var o = new Proxy({}, { get: function (_, k) {
+      if (k === 'withSuccessHandler') return function (fn) { s = fn; return o; };
+      if (k === 'withFailureHandler') return function (fn) { f = fn; return o; };
+      if (k === 'withUserObject') return function () { return o; };
+      return function () {
+        var args = JSON.stringify(Array.prototype.slice.call(arguments));
+        setTimeout(function () {
+          var res, err;
+          try { res = JSON.parse(P.__demoRpc(k, args, user)); } catch (e) { err = e; }
+          if (err) { f && f({ message: String(err && err.message || err) }); return; }
+          s && s(res);
+          try { P.__demoAfter && P.__demoAfter(k, res); } catch (e) {}
+        }, 180);
+      };
+    } });
+    return o;
+  } } };
+})();
+</script>
+<base target="_top">
+<meta charset="utf-8">
+<style>
+:root{--c:#1f6feb;--ink:#1f2328;--mute:#59636e;--line:#d1d9e0;--bg:#f6f8fa;--err:#cf222e;--ok:#1a7f37}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif}
+header{background:#fff;border-bottom:1px solid var(--line);padding:12px 16px;display:flex;align-items:center;gap:12px}
+header img{max-height:36px;max-width:120px}
+header .co{font-weight:600}
+main{max-width:560px;margin:0 auto;padding:16px 16px 96px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px}
+h2{font-size:19px;margin:0 0 4px}
+.sub{color:var(--mute);font-size:14px;margin:0 0 16px}
+.steps{display:flex;gap:4px;margin:4px 0 16px}
+.steps i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.steps i.on{background:var(--c)}
+label{display:block;font-weight:600;font-size:14px;margin:14px 0 6px}
+label .opt{font-weight:400;color:var(--mute)}
+input[type=text],input[type=tel],input[type=email],select{width:100%;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+input:focus,select:focus{outline:2px solid var(--c);outline-offset:-1px;border-color:var(--c)}
+.radio{display:flex;flex-wrap:wrap;gap:8px}
+.radio label{font-weight:400;margin:0;border:1px solid var(--line);border-radius:8px;padding:8px 12px;display:flex;gap:6px;align-items:center;cursor:pointer}
+.check{display:flex;gap:8px;align-items:flex-start;font-weight:400;font-size:15px}
+.check input{margin-top:5px;width:18px;height:18px;flex:none}
+.btns{display:flex;gap:8px;margin-top:20px}
+button{font:inherit;border-radius:8px;padding:12px 16px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+button.pri{background:var(--c);border-color:var(--c);color:#fff;flex:1;font-weight:600}
+button:disabled{opacity:.5;cursor:not-allowed}
+.err{color:var(--err);font-size:14px;margin-top:10px;min-height:1em;white-space:pre-wrap}
+.note{color:var(--mute);font-size:13px}
+.consent{max-height:160px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:13px;color:var(--mute);white-space:pre-wrap;background:var(--bg)}
+table.sum{width:100%;border-collapse:collapse;font-size:15px}
+table.sum td{padding:8px 0;border-bottom:1px solid var(--line)}
+table.sum td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+table.sum tr.net td{font-weight:700;font-size:17px;border-bottom:none}
+.doc{border:1px dashed var(--line);border-radius:10px;padding:12px;margin-top:8px}
+.doc .row{display:flex;gap:12px;align-items:center}
+.doc img.pv{width:120px;height:80px;object-fit:cover;border-radius:6px;background:var(--bg);border:1px solid var(--line)}
+.doc .st{font-size:13px;color:var(--mute)}
+.doc .st.ok{color:var(--ok)}
+.doc .st.warn{color:#9A6700}
+.wmnote{display:flex;gap:10px;align-items:flex-start;background:#EEF6F2;border:1px solid #CFE3DA;border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.6;color:#22433A;margin:4px 0 4px}
+.wmnote b{color:#0A4F42}
+.filebtn{position:relative;overflow:hidden;display:inline-block}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.pad-wrap{border:1px solid var(--line);border-radius:10px;background:#fff;position:relative}
+#pad{width:100%;height:200px;display:block;touch-action:none;border-radius:10px}
+.pad-line{position:absolute;left:16px;right:16px;bottom:44px;border-bottom:1px dashed #c4ccd4;pointer-events:none}
+.pad-hint{position:absolute;left:16px;bottom:16px;font-size:12px;color:#9aa4ae;pointer-events:none}
+#sigPreview{max-width:100%;max-height:160px;display:block;margin:12px auto}
+.fs{position:fixed;inset:0;background:#fff;z-index:20;display:none;flex-direction:column}
+.fs.on{display:flex}
+.fs .bar{display:flex;gap:8px;padding:10px;border-bottom:1px solid var(--line)}
+.fs canvas{flex:1;width:100%;touch-action:none}
+.hide{display:none!important}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--c);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.big{font-size:28px;font-weight:700}
+</style>
+</head>
+<body data-t="" data-c="#0E6B5A"><script>document.body.setAttribute('data-t', (new URLSearchParams(location.search).get('t') || '').replace(/[^0-9a-f]/gi, ''));</script>
+<header><img id="logo" class="hide" alt=""><div class="co" id="coName">勞務報酬單</div></header>
+<main>
+  <div class="steps" id="steps"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <section id="s-loading" class="card"><span class="spin"></span> 載入中…</section>
+
+  <section id="s-closed" class="card hide">
+    <h2>無法開啟</h2><p id="closedMsg" class="sub"></p>
+  </section>
+
+  <!-- 1 驗證 -->
+  <section id="s-verify" class="card hide">
+    <h2>勞務報酬單確認與簽署</h2>
+    <p class="sub"><span id="vSlip"></span></p>
+    <table class="sum">
+      <tr><td>所得人</td><td id="vName"></td></tr>
+      <tr><td>付款說明</td><td id="vNote"></td></tr>
+      <tr><td>所得類別</td><td id="vCat"></td></tr>
+      <tr id="vDateRow"><td>所得日期</td><td id="vDate"></td></tr>
+      <tr><td>所得金額</td><td id="vAmt"></td></tr>
+    </table>
+    <label>個人資料蒐集告知</label>
+    <div class="consent" id="consentText"></div>
+    <label class="check"><input type="checkbox" id="consent"> 我已閱讀並同意上述告知</label>
+    <label for="idNo">身分證字號／居留證號</label>
+    <input type="text" id="idNo" autocomplete="off" autocapitalize="characters" maxlength="10" placeholder="例如 A123456789">
+    <p class="note" id="vHint"></p>
+    <div class="err" id="eVerify"></div>
+    <div class="btns"><button class="pri" id="bVerify">下一步</button></div>
+  </section>
+
+  <!-- 2 個人資料 -->
+  <section id="s-info" class="card hide">
+    <h2>個人資料</h2><p class="sub" id="iSub">請確認或填寫以下資料。</p>
+    <div id="foreignBox" class="hide">
+      <label><span id="yearLbl"></span> 年在台居留是否滿 183 天</label>
+      <div class="radio"><label><input type="radio" name="r183" value="yes"> 是</label><label><input type="radio" name="r183" value="no"> 否</label></div>
+      <label>是否參加台灣全民健康保險</label>
+      <div class="radio"><label><input type="radio" name="nhi" value="yes"> 是</label><label><input type="radio" name="nhi" value="no"> 否</label></div>
+    </div>
+    <label for="domicile">戶籍地址</label><input type="text" id="domicile" maxlength="120">
+    <label class="check" style="margin-top:10px"><input type="checkbox" id="same"> 通訊地址同戶籍地址</label>
+    <div id="mailBox"><label for="mailing">通訊地址</label><input type="text" id="mailing" maxlength="120"></div>
+    <label for="phone">連絡電話</label><input type="tel" id="phone" maxlength="20" placeholder="0912345678">
+    <label for="email">帳務通知 Email <span class="opt">（選填，用於寄送副本與撥款通知）</span></label>
+    <input type="email" id="email" maxlength="100" autocomplete="email">
+    <div class="err" id="eInfo"></div>
+    <div class="btns"><button data-back>上一步</button><button class="pri" id="bInfo">下一步</button></div>
+  </section>
+
+  <!-- 3 證件 -->
+  <section id="s-docs" class="card hide">
+    <h2>身分證件</h2><p class="sub">請拍攝或上傳清晰、四角完整的影像。</p>
+    <div class="wmnote" role="note"><span aria-hidden="true">🔒</span><span>為保護你的證件，照片會先在<b>你的手機上</b>壓上「<b class="wmtext"></b>」浮水印再上傳，<b>原始照片不會離開你的手機</b>。選好照片後可以先看到加上浮水印的樣子。</span></div>
+    <div id="doc-front"></div>
+    <div id="doc-back"></div>
+    <div class="err" id="eDocs"></div>
+    <div class="btns"><button data-back>上一步</button><button class="pri" id="bDocs">下一步</button></div>
+  </section>
+
+  <!-- 4 銀行 -->
+  <section id="s-bank" class="card hide">
+    <h2>收款帳戶</h2><p class="sub">款項將匯入以下帳戶。存摺封面同樣會先在你的手機上壓上浮水印再上傳。</p>
+    <div id="keepAccBox" class="hide">
+      <div class="radio">
+        <label><input type="radio" name="acc" value="keep" checked> 沿用 <span id="accTail"></span></label>
+        <label><input type="radio" name="acc" value="new"> 更換帳戶</label>
+      </div>
+    </div>
+    <div id="accFields">
+      <label for="bank">銀行</label>
+      <select id="bank"></select>
+      <div id="otherBank" class="hide">
+        <label for="bankCode">銀行代碼（3 碼）</label><input type="tel" id="bankCode" maxlength="3">
+        <label for="bankName">銀行名稱</label><input type="text" id="bankName" maxlength="30">
+      </div>
+      <label for="branch">分行 <span class="opt">（選填）</span></label><input type="text" id="branch" maxlength="30">
+      <label for="account">帳號</label><input type="tel" id="account" maxlength="20" placeholder="只填數字">
+      <label for="holder">戶名</label><input type="text" id="holder" maxlength="30">
+      <p class="note hide" id="holderWarn">戶名與所得人姓名不同，請確認是否正確。</p>
+    </div>
+    <div id="doc-bank"></div>
+    <div class="err" id="eBank"></div>
+    <div class="btns"><button data-back>上一步</button><button class="pri" id="bBank">下一步</button></div>
+  </section>
+
+  <!-- 5 確認金額 -->
+  <section id="s-confirm" class="card hide">
+    <h2>確認金額</h2><p class="sub">金額由發放單位決定；如有疑問請先聯絡經辦，不要簽名。</p>
+    <table class="sum">
+      <tr><td>所得金額</td><td id="cAmt"></td></tr>
+      <tr><td>扣繳健保補充保費</td><td id="cSupp"></td></tr>
+      <tr><td>預扣所得稅</td><td id="cTax"></td></tr>
+      <tr class="net"><td>實付金額</td><td id="cNet"></td></tr>
+    </table>
+    <p class="note" id="cNotes"></p>
+    <p class="note" id="cNetNote"></p>
+    <div class="err" id="eConfirm"></div>
+    <div class="btns"><button data-back>上一步</button><button class="pri" id="bConfirm">金額正確，前往簽名</button></div>
+  </section>
+
+  <!-- 6 簽名 -->
+  <section id="s-sign" class="card hide">
+    <h2>簽名</h2><p class="sub">請用手指或觸控筆在框內簽下您的姓名。</p>
+    <div id="padBox">
+      <div class="pad-wrap"><canvas id="pad"></canvas><div class="pad-line"></div><div class="pad-hint">在此簽名</div></div>
+      <div class="btns" style="margin-top:8px">
+        <button id="bClear">清除</button>
+        <button id="bFull">放大簽名</button>
+        <span class="filebtn"><button type="button">上傳簽名圖</button><input type="file" id="sigFile" accept="image/png,image/jpeg"></span>
+      </div>
+    </div>
+    <div id="sigPreviewBox" class="hide">
+      <img id="sigPreview" alt="簽名預覽">
+      <div class="btns" style="margin-top:0"><button id="bResign">重新簽名</button></div>
+    </div>
+    <label class="check" style="margin-top:16px"><input type="checkbox" id="esign"> <span>我同意以電子方式簽署本勞務報酬單，並確認所填資料正確。<span id="esignWm"></span></span></label>
+    <div class="err" id="eSign"></div>
+    <div class="btns"><button data-back>上一步</button><button class="pri" id="bSubmit">確認送出</button></div>
+  </section>
+
+  <!-- 完成 -->
+  <section id="s-done" class="card hide">
+    <h2>已完成簽署</h2>
+    <p class="sub" id="dSub">謝謝您，資料已送出。</p>
+    <p id="dNetBox" class="hide">實付金額<br><span class="big" id="dNet"></span></p>
+    <div class="btns"><button class="pri" id="bDownload">下載 PDF 副本</button></div>
+    <p class="note" id="dUntil"></p>
+    <div class="err" id="eDone"></div>
+  </section>
+</main>
+
+<div class="fs" id="fs">
+  <div class="bar"><button id="fsCancel">取消</button><button id="fsClear">清除</button><button class="pri" id="fsOk">完成</button></div>
+  <canvas id="fsPad"></canvas>
+</div>
+
+<script>
+(function () {
+  var T = document.body.getAttribute('data-t') || '';
+  var C = document.body.getAttribute('data-c') || '#1f6feb';
+  if (/^#[0-9a-fA-F]{6}$/.test(C)) document.documentElement.style.setProperty('--c', C);
+
+  var BANKS = [['004','臺灣銀行'],['005','土地銀行'],['006','合作金庫'],['007','第一銀行'],['008','華南銀行'],['009','彰化銀行'],
+    ['011','上海商業儲蓄銀行'],['012','台北富邦銀行'],['013','國泰世華銀行'],['016','高雄銀行'],['017','兆豐銀行'],['048','王道銀行'],
+    ['050','臺灣中小企業銀行'],['052','渣打國際商業銀行'],['053','台中商業銀行'],['054','京城商業銀行'],['081','匯豐(台灣)銀行'],
+    ['101','瑞興商業銀行'],['102','華泰商業銀行'],['103','臺灣新光商業銀行'],['108','陽信商業銀行'],['118','板信商業銀行'],
+    ['147','三信商業銀行'],['700','中華郵政'],['803','聯邦商業銀行'],['805','遠東國際商業銀行'],['806','元大商業銀行'],
+    ['807','永豐商業銀行'],['808','玉山商業銀行'],['809','凱基商業銀行'],['810','星展(台灣)商業銀行'],['812','台新國際商業銀行'],
+    ['816','安泰商業銀行'],['822','中國信託商業銀行'],['823','將來商業銀行'],['824','連線商業銀行'],['826','樂天國際商業銀行']];
+
+  var S = { init: null, v: null, up: {}, keep: {}, sigMode: 'pad', sig: null, steps: ['s-verify','s-info','s-docs','s-bank','s-confirm','s-sign'] };
+  var $ = function (id) { return document.getElementById(id); };
+  var money = function (n) { return 'NTD ' + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+
+  function call(fn) {
+    var args = Array.prototype.slice.call(arguments, 1);
+    return new Promise(function (resolve) {
+      var r = google.script.run.withSuccessHandler(function (res) { resolve(res || { ok: false, message: '沒有回應' }); })
+        .withFailureHandler(function (err) { resolve({ ok: false, message: '連線失敗，請檢查網路後再試。' + (err && err.message ? '\n(' + err.message + ')' : '') }); });
+      r[fn].apply(r, args);
+    });
+  }
+
+  function show(id) {
+    ['s-loading','s-closed','s-verify','s-info','s-docs','s-bank','s-confirm','s-sign','s-done'].forEach(function (x) { $(x).classList.toggle('hide', x !== id); });
+    var idx = S.steps.indexOf(id);
+    var bars = $('steps').children;
+    for (var i = 0; i < bars.length; i++) bars[i].classList.toggle('on', idx >= 0 ? i <= idx : id === 's-done');
+    $('steps').classList.toggle('hide', id === 's-loading' || id === 's-closed');
+    window.scrollTo(0, 0);
+    if (id === 's-sign') setTimeout(function () { pad.resize(); }, 30);
+  }
+  function busy(btn, on, text) {
+    btn.disabled = on;
+    if (on) { btn._t = btn.textContent; btn.innerHTML = '<span class="spin"></span> ' + (text || '處理中…'); }
+    else if (btn._t) btn.textContent = btn._t;
+  }
+  function err(id, msg) { $(id).textContent = msg || ''; }
+  function radio(name) { var x = document.querySelector('input[name="' + name + '"]:checked'); return x ? x.value : ''; }
+  function setRadio(name, val) { var x = document.querySelector('input[name="' + name + '"][value="' + val + '"]'); if (x) x.checked = true; }
+
+  document.querySelectorAll('[data-back]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var cur = S.steps.filter(function (x) { return !$(x).classList.contains('hide'); })[0];
+      var i = S.steps.indexOf(cur);
+      if (i > 0) show(S.steps[i - 1]);
+    });
+  });
+
+  /* ---------- 開頁 ---------- */
+  call('api_init', T).then(function (r) {
+    if (!r.ok) { $('closedMsg').textContent = r.message; show('s-closed'); return; }
+    S.init = r;
+    S.wm = r.wm || ('僅供' + r.company.name + '辦理勞務報酬單使用');
+    [].forEach.call(document.querySelectorAll('.wmtext'), function (x) { x.textContent = S.wm; });
+    $('esignWm').textContent = '我上傳的證件影像已加註「' + S.wm + '」浮水印，僅供本次勞務報酬單作業使用。';
+    $('coName').textContent = r.company.name;
+    if (r.company.logo) { $('logo').src = r.company.logo; $('logo').classList.remove('hide'); }
+    if (r.mode === 'closed') { $('closedMsg').textContent = r.message; show('s-closed'); return; }
+    if (r.mode === 'done') { $('dSub').textContent = '此報酬單（' + r.slip.id + '）已完成簽署。'; show('s-done'); return; }
+    var s = r.slip;
+    $('vSlip').textContent = '單號 ' + s.id;
+    $('vName').textContent = s.name;
+    $('vNote').textContent = s.payNote || '—';
+    $('vCat').textContent = s.category;
+    $('vDate').textContent = s.incomeDate;
+    $('vDateRow').classList.toggle('hide', !s.incomeDate);
+    $('vAmt').textContent = money(s.amount);
+    $('consentText').textContent = r.consent.text;
+    $('vHint').textContent = r.existing ? '輸入後將帶出您先前留存的資料，只需確認或更新。' : '外籍人士請輸入居留證統一證號。';
+    $('holder').value = s.name;
+    show('s-verify');
+  });
+
+  /* ---------- 1 驗證 ---------- */
+  $('bVerify').addEventListener('click', function () {
+    err('eVerify');
+    if (!$('consent').checked) return err('eVerify', '請先勾選同意個人資料蒐集告知。');
+    var id = $('idNo').value.trim().toUpperCase();
+    if (!/^[A-Z][A-D0-9]\d{8}$/.test(id)) return err('eVerify', '格式不正確：第 1 碼英文字母、共 10 碼。');
+    var b = this; busy(b, true, '驗證中…');
+    call('api_verify', T, id, true).then(function (r) {
+      busy(b, false);
+      if (!r.ok) return err('eVerify', r.message);
+      S.v = r;
+      setupInfo(r);
+      show('s-info');
+    });
+  });
+
+  function setupInfo(r) {
+    var p = r.prefill || {};
+    $('foreignBox').classList.toggle('hide', r.idType !== 'foreign');
+    $('yearLbl').textContent = String(r.year);
+    if (p.nhi === '是') setRadio('nhi', 'yes'); else if (p.nhi === '否') setRadio('nhi', 'no');
+    $('iSub').textContent = r.existing ? '已帶入您先前的資料，請確認是否仍正確。' : '請填寫以下資料，下次將自動帶入。';
+    $('domicile').value = p.domicile || '';
+    $('mailing').value = p.mailing || '';
+    $('same').checked = !!p.domicile && p.domicile === p.mailing;
+    $('mailBox').classList.toggle('hide', $('same').checked);
+    $('phone').value = p.phone || '';
+    $('email').value = p.email || '';
+    buildDoc('front', '身分證正面', p.hasFront, p.frontThumb, p.docsDate, p.oldFront);
+    buildDoc('back', '身分證反面', p.hasBack, p.backThumb, p.docsDate, p.oldBack);
+    buildDoc('bank', '存摺封面（顯示戶名與帳號）', p.hasBank, p.bankThumb, p.docsDate, p.oldBank);
+    if (p.hasAccount) {
+      $('keepAccBox').classList.remove('hide');
+      $('accTail').textContent = (p.bankName || '') + ' ' + (p.accountTail || '');
+      setRadio('acc', 'keep');
+    }
+    if (p.holder) $('holder').value = p.holder;
+    if (p.bankCode) $('bank').value = BANKS.some(function (x) { return x[0] === p.bankCode; }) ? p.bankCode : 'other';
+    if (p.branch) $('branch').value = p.branch;
+    syncAcc();
+  }
+
+  $('same').addEventListener('change', function () { $('mailBox').classList.toggle('hide', this.checked); });
+
+  /* ---------- 2 個人資料 ---------- */
+  $('bInfo').addEventListener('click', function () {
+    err('eInfo');
+    if (S.v.idType === 'foreign') {
+      if (!radio('r183')) return err('eInfo', '請選擇今年在台居留是否滿 183 天。');
+      if (!radio('nhi')) return err('eInfo', '請選擇是否參加全民健康保險。');
+    }
+    if (!$('domicile').value.trim()) return err('eInfo', '請填寫戶籍地址。');
+    if (!$('same').checked && !$('mailing').value.trim()) return err('eInfo', '請填寫通訊地址。');
+    if (!/^[0-9+\-#()（） ]{8,20}$/.test($('phone').value.trim())) return err('eInfo', '連絡電話格式不正確。');
+    var em = $('email').value.trim();
+    if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) return err('eInfo', 'Email 格式不正確。');
+    show('s-docs');
+  });
+
+  /* ---------- 證件元件 ---------- */
+  function buildDoc(kind, label, has, thumb, date, old) {
+    var box = $('doc-' + kind);
+    box.innerHTML = '';
+    var d = document.createElement('div'); d.className = 'doc';
+    var t = document.createElement('div'); t.style.fontWeight = '600'; t.style.fontSize = '14px'; t.textContent = label; d.appendChild(t);
+    var row = document.createElement('div'); row.className = 'row';
+    var img = document.createElement('img'); img.className = 'pv'; img.alt = '';
+    if (thumb) img.src = thumb; else img.classList.add('hide');
+    var right = document.createElement('div');
+    var st = document.createElement('div'); st.className = 'st';
+    st.textContent = has ? '已有留存影像（含浮水印）' + (date ? '（' + date + '）' : '') + '，可直接沿用' : old ? '先前留存的影像沒有浮水印，請重新上傳一次' : '尚未上傳';
+    if (old && !has) st.className = 'st warn';
+    var fb = document.createElement('span'); fb.className = 'filebtn';
+    var bt = document.createElement('button'); bt.type = 'button'; bt.textContent = has ? '重新上傳' : '拍照／選擇檔案';
+    var inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
+    fb.appendChild(bt); fb.appendChild(inp);
+    right.appendChild(st); right.appendChild(fb);
+    row.appendChild(img); row.appendChild(right); d.appendChild(row); box.appendChild(d);
+    S.keep[kind] = !!has; S.up[kind] = false;
+    inp.addEventListener('change', function () {
+      var f = inp.files && inp.files[0]; if (!f) return;
+      st.className = 'st'; st.innerHTML = '<span class="spin"></span> 加上浮水印並上傳中…';
+      bt.disabled = true;
+      var wm = S.wm + '｜' + ymdSlash(new Date());
+      compress(f, wm).then(function (url) {
+        img.src = url; img.classList.remove('hide');
+        return call('api_upload', T, kind, url, wm);
+      }).then(function (r) {
+        bt.disabled = false;
+        if (!r.ok) { st.className = 'st'; st.style.color = 'var(--err)'; st.textContent = r.message; S.up[kind] = false; return; }
+        st.className = 'st ok'; st.style.color = ''; st.textContent = '已加上浮水印並上傳 ✓'; S.up[kind] = true; bt.textContent = '重新上傳';
+      }).catch(function (e) {
+        bt.disabled = false; st.className = 'st'; st.style.color = 'var(--err)';
+        st.textContent = '無法讀取這張圖片，請改用 JPG 或 PNG。';
+      });
+      inp.value = '';
+    });
+  }
+
+  function ymdSlash(d) { return d.getFullYear() + '/' + ('0' + (d.getMonth() + 1)).slice(-2) + '/' + ('0' + d.getDate()).slice(-2); }
+
+  /** 讀入圖片、縮到 1600px，在手機上壓浮水印後輸出 JPEG（原圖不上傳） */
+  function compress(file, wm) {
+    return new Promise(function (resolve, reject) {
+      var fr = new FileReader();
+      fr.onerror = reject;
+      fr.onload = function () {
+        var im = new Image();
+        im.onerror = reject;
+        im.onload = function () {
+          var max = 1600, w = im.naturalWidth, h = im.naturalHeight;
+          var k = Math.min(1, max / Math.max(w, h));
+          var cv = document.createElement('canvas');
+          cv.width = Math.round(w * k); cv.height = Math.round(h * k);
+          var cx = cv.getContext('2d');
+          cx.fillStyle = '#fff'; cx.fillRect(0, 0, cv.width, cv.height);
+          cx.drawImage(im, 0, 0, cv.width, cv.height);
+          if (wm) watermark(cx, cv.width, cv.height, wm);
+          var q = 0.82, out = cv.toDataURL('image/jpeg', q);
+          while (out.length > 4.5e6 && q > 0.4) { q -= 0.15; out = cv.toDataURL('image/jpeg', q); }
+          resolve(out);
+        };
+        im.src = fr.result;
+      };
+      fr.readAsDataURL(file);
+    });
+  }
+
+  /** 浮水印：斜向重複的半透明文字（行距加寬，不遮擋證件內容） */
+  function watermark(cx, W, H, text) {
+    var FONT = '"PingFang TC","Noto Sans TC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif';
+    var fs = Math.max(14, Math.round(Math.min(W, H) / 16));
+    cx.save();
+    cx.translate(W / 2, H / 2);
+    cx.rotate(-Math.PI / 7);
+    cx.font = '600 ' + fs + 'px ' + FONT;
+    cx.textAlign = 'center'; cx.textBaseline = 'middle';
+    var tw = cx.measureText(text).width + fs * 3, step = fs * 6.8, R = Math.sqrt(W * W + H * H) / 2 + tw;
+    for (var y = -Math.ceil(R / step) * step, row = 0; y <= R; y += step, row++) {
+      for (var x = -R + (row % 2 ? tw / 2 : 0); x <= R; x += tw) {
+        cx.lineWidth = Math.max(1, fs / 12); cx.strokeStyle = 'rgba(255,255,255,0.35)'; cx.strokeText(text, x, y);
+        cx.fillStyle = 'rgba(200,30,30,0.30)'; cx.fillText(text, x, y);
+      }
+    }
+    cx.restore();
+  }
+
+  /* ---------- 3 證件 ---------- */
+  $('bDocs').addEventListener('click', function () {
+    err('eDocs');
+    if (!(S.up.front || S.keep.front)) return err('eDocs', '請上傳身分證正面。');
+    if (!(S.up.back || S.keep.back)) return err('eDocs', '請上傳身分證反面。');
+    show('s-bank');
+  });
+
+  /* ---------- 4 銀行 ---------- */
+  var sel = $('bank');
+  sel.innerHTML = '<option value="">請選擇</option>' + BANKS.map(function (b) { return '<option value="' + b[0] + '">' + b[0] + ' ' + b[1] + '</option>'; }).join('') + '<option value="other">其他（自行輸入）</option>';
+  sel.addEventListener('change', function () { $('otherBank').classList.toggle('hide', sel.value !== 'other'); });
+  document.querySelectorAll('input[name="acc"]').forEach(function (x) { x.addEventListener('change', syncAcc); });
+  $('holder').addEventListener('input', function () {
+    var n = S.init ? S.init.slip.name : '';
+    $('holderWarn').classList.toggle('hide', !this.value.trim() || this.value.trim() === n);
+  });
+  function keepAcc() { return !$('keepAccBox').classList.contains('hide') && radio('acc') === 'keep'; }
+  function syncAcc() {
+    var keep = keepAcc();
+    $('accFields').classList.toggle('hide', keep);
+    $('otherBank').classList.toggle('hide', sel.value !== 'other');
+  }
+
+  $('bBank').addEventListener('click', function () {
+    err('eBank');
+    var keep = keepAcc();
+    if (!keep) {
+      if (!sel.value) return err('eBank', '請選擇銀行。');
+      if (sel.value === 'other') {
+        if (!/^\d{3}$/.test($('bankCode').value.trim())) return err('eBank', '銀行代碼須為 3 碼數字。');
+        if (!$('bankName').value.trim()) return err('eBank', '請填寫銀行名稱。');
+      }
+      if (!/^\d{6,16}$/.test($('account').value.replace(/[\s\-]/g, ''))) return err('eBank', '帳號須為 6~16 位數字。');
+      if (!$('holder').value.trim()) return err('eBank', '請填寫戶名。');
+      if (!S.up.bank) return err('eBank', '更換或新增帳戶時，請上傳該帳戶的存摺封面。');
+    } else if (!(S.up.bank || S.keep.bank)) {
+      return err('eBank', S.v && S.v.prefill && S.v.prefill.oldBank ? '先前留存的存摺影像沒有浮水印，請重新上傳存摺封面。' : '請上傳存摺封面。');
+    }
+    var b = this; busy(b, true, '計算中…');
+    call('api_quote', T, { resident183: radio('r183'), nhi: radio('nhi') }).then(function (r) {
+      busy(b, false);
+      if (!r.ok) return err('eBank', r.message);
+      $('cAmt').textContent = money(r.amount);
+      $('cSupp').textContent = '− ' + money(r.supp);
+      $('cTax').textContent = '− ' + money(r.tax);
+      $('cNet').textContent = money(r.net);
+      $('cNotes').textContent = (r.notes || []).join('；');
+      $('cNetNote').textContent = S.init.netNote || '';
+      S.quote = r;
+      show('s-confirm');
+    });
+  });
+
+  /* ---------- 5 確認 ---------- */
+  $('bConfirm').addEventListener('click', function () { show('s-sign'); });
+
+  /* ---------- 簽名板 ---------- */
+  function Pad(canvas) {
+    var self = this, ctx = canvas.getContext('2d'), drawing = false, last = null, mid = null;
+    self.len = 0;
+    self.resize = function () {
+      var r = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+      if (!r.width) return;
+      canvas.width = Math.round(r.width * dpr); canvas.height = Math.round(r.height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#111'; ctx.fillStyle = '#111';
+      ctx.lineWidth = Math.max(2.4, Math.min(4, r.width / 180));
+      self.len = 0;
+    };
+    self.clear = function () { self.resize(); };
+    function pos(e) { var r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+    canvas.addEventListener('pointerdown', function (e) {
+      e.preventDefault(); canvas.setPointerCapture(e.pointerId);
+      drawing = true; last = pos(e); mid = last;
+      ctx.beginPath(); ctx.arc(last.x, last.y, ctx.lineWidth / 2, 0, Math.PI * 2); ctx.fill();
+    });
+    canvas.addEventListener('pointermove', function (e) {
+      if (!drawing) return;
+      e.preventDefault();
+      var evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+      if (!evs.length) evs = [e];
+      evs.forEach(function (ev) {
+        var p = pos(ev), m2 = { x: (last.x + p.x) / 2, y: (last.y + p.y) / 2 };
+        ctx.beginPath(); ctx.moveTo(mid.x, mid.y); ctx.quadraticCurveTo(last.x, last.y, m2.x, m2.y); ctx.stroke();
+        self.len += Math.hypot(p.x - last.x, p.y - last.y);
+        last = p; mid = m2;
+      });
+    });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (t) { canvas.addEventListener(t, function () { drawing = false; }); });
+    self.isEmpty = function () { return self.len < 40; };
+    self.toPng = function () { return trimPng(canvas); };
+  }
+
+  /** 裁掉透明邊並留 8px 邊距 */
+  function trimPng(cv) {
+    var cx = cv.getContext('2d'), w = cv.width, h = cv.height, d = cx.getImageData(0, 0, w, h).data;
+    var x0 = w, y0 = h, x1 = -1, y1 = -1, n = 0;
+    for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) {
+      if (d[(y * w + x) * 4 + 3] > 10) { n++; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    }
+    if (n < 50) return null;
+    var pad = 8, ow = x1 - x0 + 1 + pad * 2, oh = y1 - y0 + 1 + pad * 2;
+    var k = Math.min(1, 1200 / ow);
+    var out = document.createElement('canvas'); out.width = Math.round(ow * k); out.height = Math.round(oh * k);
+    out.getContext('2d').drawImage(cv, x0 - pad, y0 - pad, ow, oh, 0, 0, out.width, out.height);
+    return out.toDataURL('image/png');
+  }
+
+  var pad = new Pad($('pad'));
+  var fsPad = new Pad($('fsPad'));
+  window.addEventListener('resize', function () { if (S.sigMode === 'pad' && pad.isEmpty()) pad.resize(); });
+
+  $('bClear').addEventListener('click', function () { pad.clear(); });
+  $('bFull').addEventListener('click', function () {
+    $('fs').classList.add('on');
+    setTimeout(function () { fsPad.resize(); }, 30);
+  });
+  $('fsCancel').addEventListener('click', function () { $('fs').classList.remove('on'); });
+  $('fsClear').addEventListener('click', function () { fsPad.clear(); });
+  $('fsOk').addEventListener('click', function () {
+    if (fsPad.isEmpty()) return;
+    var png = fsPad.toPng(); if (!png) return;
+    setSig('fs', png);
+    $('fs').classList.remove('on');
+  });
+  $('bResign').addEventListener('click', function () {
+    S.sigMode = 'pad'; S.sig = null;
+    $('sigPreviewBox').classList.add('hide'); $('padBox').classList.remove('hide');
+    setTimeout(function () { pad.resize(); }, 30);
+  });
+  function setSig(mode, png) {
+    S.sigMode = mode; S.sig = png;
+    $('sigPreview').src = png;
+    $('sigPreviewBox').classList.remove('hide'); $('padBox').classList.add('hide');
+  }
+
+  $('sigFile').addEventListener('change', function () {
+    var f = this.files && this.files[0]; this.value = '';
+    if (!f) return;
+    err('eSign');
+    var fr = new FileReader();
+    fr.onload = function () {
+      var im = new Image();
+      im.onerror = function () { err('eSign', '無法讀取這張圖片，請改用 JPG 或 PNG。'); };
+      im.onload = function () {
+        var k = Math.min(1, 1200 / Math.max(im.naturalWidth, im.naturalHeight));
+        var cv = document.createElement('canvas'); cv.width = Math.round(im.naturalWidth * k); cv.height = Math.round(im.naturalHeight * k);
+        var cx = cv.getContext('2d'); cx.drawImage(im, 0, 0, cv.width, cv.height);
+        var id = cx.getImageData(0, 0, cv.width, cv.height), d = id.data, ink = 0;
+        for (var i = 0; i < d.length; i += 4) {
+          var l = (d[i] + d[i + 1] + d[i + 2]) / 3;
+          if (l > 190 || d[i + 3] < 20) d[i + 3] = 0; else ink++;
+        }
+        cx.putImageData(id, 0, 0);
+        if (ink < 200) return err('eSign', '圖片中找不到明顯的簽名筆跡，請改用白底深色筆跡的照片。');
+        var png = trimPng(cv);
+        if (!png) return err('eSign', '圖片中找不到明顯的簽名筆跡。');
+        setSig('upload', png);
+      };
+      im.src = fr.result;
+    };
+    fr.readAsDataURL(f);
+  });
+
+  /* ---------- 6 送出 ---------- */
+  $('bSubmit').addEventListener('click', function () {
+    err('eSign');
+    var sig = S.sigMode === 'pad' ? (pad.isEmpty() ? null : pad.toPng()) : S.sig;
+    if (!sig) return err('eSign', '請先簽名。');
+    if (!$('esign').checked) return err('eSign', '請勾選同意以電子方式簽署。');
+    var keep = keepAcc();
+    var code = sel.value === 'other' ? $('bankCode').value.trim() : sel.value;
+    var bname = sel.value === 'other' ? $('bankName').value.trim()
+      : ((BANKS.filter(function (x) { return x[0] === sel.value; })[0] || [])[1] || '');
+    var payload = {
+      domicile: $('domicile').value.trim(),
+      sameAddress: $('same').checked,
+      mailing: $('mailing').value.trim(),
+      phone: $('phone').value.trim(),
+      email: $('email').value.trim(),
+      keepAccount: keep,
+      bankCode: code, bankName: bname,
+      branch: $('branch').value.trim(),
+      account: $('account').value.replace(/[\s\-]/g, ''),
+      holder: $('holder').value.trim(),
+      resident183: radio('r183'), nhi: radio('nhi'),
+      signature: sig,
+      esignConsent: true,
+      device: { ua: navigator.userAgent, screen: screen.width + 'x' + screen.height }
+    };
+    var b = this; busy(b, true, '產生報酬單中，約需 10~20 秒…');
+    call('api_submit', T, payload).then(function (r) {
+      busy(b, false);
+      if (!r.ok) return err('eSign', r.message);
+      $('dSub').textContent = '單號 ' + r.slipId + ' 已完成簽署，發放單位已收到通知。';
+      $('dNet').textContent = money(r.net); $('dNetBox').classList.remove('hide');
+      $('dUntil').textContent = '副本可下載至 ' + r.until + '。' + (payload.email ? '下載連結也已寄到您的 Email。' : '');
+      show('s-done');
+    });
+  });
+
+  /* ---------- 下載 ---------- */
+  $('bDownload').addEventListener('click', function () {
+    err('eDone');
+    var b = this; busy(b, true, '準備檔案…');
+    call('api_download', T).then(function (r) {
+      busy(b, false);
+      if (!r.ok) return err('eDone', r.message);
+      var bin = atob(r.data), arr = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      var url = URL.createObjectURL(new Blob([arr], { type: 'application/pdf' }));
+      var a = document.createElement('a'); a.href = url; a.download = r.name; a.target = '_blank';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+    });
+  });
+})();
+</script>
+</body>
+</html>
