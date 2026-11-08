@@ -32,8 +32,11 @@
 </script>
 <base target="_top">
 <meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 字型不擋畫面：先用系統字型顯示，下載完再換 -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <style>
 :root{--c:#0E6B5A;--c2:#0A5547;--tint:#E3F1EC;--tint2:#F3FAF7;--cdark:#0A4F42;--ink:#17201D;--ink2:#2B3632;--mute:#5B6661;--line:#DCE2DF;--line2:#EEF1EF;--bg:#F4F6F5;--in:#C9D2CE;--warn:#8A5300;--warnbg:#FBF0DC;--bad:#A3261F;--badbg:#FBE7E5}
 *{box-sizing:border-box}
@@ -350,6 +353,32 @@ function calcWithholding_(input, rules, consts) {
     PERF_C.n++; PERF_C.rt += rt;
     if (typeof sv === 'number') { PERF_C.sv += sv; PERF_C.svN++; }
   }
+  /*
+   * 第一次載入：頁面一開始就同時送出（不必等整頁解析完，也不必一個等一個）
+   *   啟動資料（控制台）＋開單資料（所得人、進行中案件）＋總覽三塊（勞報單、往來、帳務）
+   * 每個請求只開自己需要的那份試算表，等待時間是最慢的那個，而不是全部相加。
+   */
+  var BOOT_P = null, DASH_P = null;
+  function startBoot() {
+    if (BOOT_P) return;
+    var slip = api('adm_bootSlip').catch(function (e) {
+      if (e && (e.license || e.denied)) return { payees: [], cases: [] };   // 授權無效、沒有權限：由啟動資料決定要顯示什麼
+      return api('adm_bootSlip');   // 其他錯誤重試一次
+    });
+    BOOT_P = Promise.all([api('adm_bootstrap'), slip]).then(function (r) {
+      r[0].payees = r[1].payees;
+      r[0].cases = r[1].cases;
+      return r[0];
+    });
+    DASH_P = Promise.all(['slip', 'crm', 'acct'].map(function (part) {
+      return api('adm_dashboard', part).catch(function () { return null; });
+    })).then(function (r) {
+      if (!r[0] || !r[1] || !r[2]) return null;   // 任一塊失敗（例如授權無效）：由總覽頁自己整份重讀
+      r[0].crm = r[1].crm;
+      r[0].acct = r[2].acct;
+      return r[0];
+    });
+  }
   function api(fn) {
     var args = Array.prototype.slice.call(arguments, 1), t0 = Date.now();
     return new Promise(function (resolve, reject) {
@@ -364,6 +393,7 @@ function calcWithholding_(input, rules, consts) {
       r[fn].apply(r, args);
     });
   }
+  startBoot();   // 這裡就送出，瀏覽器同時繼續解析下面的程式與往來、帳務模組
 
   var toastTimer = null;
   function toast(msg, err) {
@@ -391,11 +421,25 @@ function calcWithholding_(input, rules, consts) {
     if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () { toast('請手動選取連結複製', true); });
     else toast('請手動選取連結複製', true);
   }
+  /* QR Code 程式庫只有顯示連結時才用到，第一次要畫時才下載（不擋後台開啟） */
+  var QR_P = null;
+  function loadQr() {
+    if (window.QRCode) return Promise.resolve();
+    if (!QR_P) QR_P = new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+      s.onload = resolve;
+      s.onerror = function () { QR_P = null; reject(); };
+      document.head.appendChild(s);
+    });
+    return QR_P;
+  }
   function drawQr(el, text) {
     if (!el) return;
     el.innerHTML = '';
-    try { new QRCode(el, { text: text, width: 240, height: 240, correctLevel: QRCode.CorrectLevel.M }); }
-    catch (e) { el.textContent = 'QR Code 無法載入'; }
+    loadQr().then(function () {
+      new QRCode(el, { text: text, width: 240, height: 240, correctLevel: QRCode.CorrectLevel.M });
+    }).catch(function () { el.textContent = 'QR Code 無法載入'; });
   }
   function downloadBase64(name, b64, mime) {
     var bin = atob(b64), arr = new Uint8Array(bin.length);
@@ -525,7 +569,16 @@ function calcWithholding_(input, rules, consts) {
 
   /* ================= 總覽 ================= */
   function viewDash() {
-    if (S.boot && S.boot.dash) { var d0 = S.boot.dash; S.boot.dash = null; S.dashLast = d0; return renderDash(d0); }   // 啟動時已帶回
+    if (DASH_P) {   // 第一次進總覽：用頁面一開始就送出的請求
+      var p0 = DASH_P;
+      DASH_P = null;
+      MAIN.innerHTML = loading();
+      return p0.then(function (d0) {
+        if (!d0) return viewDash();
+        S.dashLast = d0;
+        if (S.view === 'dash') renderDash(d0);
+      });
+    }
     // 先顯示上次的內容（立即），背景重新讀取；內容有變才重畫
     var prev = S.dashLast;
     if (prev) renderDash(prev); else MAIN.innerHTML = loading();
@@ -1607,8 +1660,10 @@ function calcWithholding_(input, rules, consts) {
 
   /* ================= 啟動 ================= */
   function boot() {
-    api('adm_bootstrap').then(function (d) {
+    startBoot();
+    BOOT_P.then(function (d) {
       S.boot = d;
+      if (d.migration) DASH_P = null;   // 資料升級中或剛升級完：總覽重新讀
       setBrand(d.company.color);
       if (d.license && d.license.strict && !d.license.ok) return renderLicenseWall(d.license.message);
       renderSide();
@@ -1622,7 +1677,7 @@ function calcWithholding_(input, rules, consts) {
       else { renderDenied((e && e.message) || '無法載入後台'); }
     });
   }
-  setTimeout(boot, 0);   // 讓後面載入的模組（往來）先註冊畫面
+  setTimeout(boot, 0);   // 讓後面載入的模組（往來）先註冊畫面；請求已在上面送出
 })();
 </script>
 <style>
